@@ -4,7 +4,7 @@ import { Switch, Input, InputNumber, Button, Select } from 'antd'
 
 const Option = Select.Option
 
-class KeywordTab extends Component {
+class KeywordForm extends Component {
   ipcRenderer = window.electron.ipcRenderer || false
   state = {
     pageNumber: 1,
@@ -87,4 +87,4 @@ class KeywordTab extends Component {
   }
 }
 
-export default KeywordTab
+export default KeywordForm

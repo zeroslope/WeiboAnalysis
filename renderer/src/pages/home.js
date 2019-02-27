@@ -5,10 +5,12 @@ import Layout from '../components/Layout'
 import { jsx, css } from '@emotion/core' // eslint-disable-line
 import { Tabs } from 'antd'
 
-import CommentTab from '../components/tabs/CommentTab'
-import RepostTab from '../components/tabs/RepostTab'
+import CommentTab from '../components/form/CommentForm'
+import RepostTab from '../components/form/RepostForm'
+// import UserTab from '../components/form/UserForm'
+
+import KeywordTab from '../components/form/KeywordForm'
 import UserTab from '../components/tabs/UserTab'
-import KeywordTab from '../components/tabs/KeywordTab'
 
 const TabPane = Tabs.TabPane
 

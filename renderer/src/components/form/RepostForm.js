@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text } from '../utils'
 import { Input, InputNumber, Button } from 'antd'
 
-class CommentTab extends Component {
+class RepostForm extends Component {
   ipcRenderer = window.electron.ipcRenderer || false
   state = {
     projectName: '',
@@ -12,7 +12,7 @@ class CommentTab extends Component {
 
   componentDidMount () {
     if (this.ipcRenderer) {
-      this.ipcRenderer.on('search-by-comment', (event, data) => {
+      this.ipcRenderer.on('search-by-repost', (event, data) => {
         window.alert(data)
       })
     }
@@ -20,7 +20,7 @@ class CommentTab extends Component {
 
   componentWillUnmount () {
     if (this.ipcRenderer) {
-      this.ipcRenderer.removeAllListeners('search-by-comment')
+      this.ipcRenderer.removeAllListeners('search-by-repost')
     }
   }
 
@@ -31,7 +31,7 @@ class CommentTab extends Component {
   handleSubmit = () => {
     if (this.ipcRenderer) {
       const { projectName: username, userId, pageNumber, isNeedImage } = this.state
-      this.ipcRenderer.send('search-by-comment', {
+      this.ipcRenderer.send('search-by-repost', {
         type: '1',
         username,
         userId,
@@ -45,7 +45,7 @@ class CommentTab extends Component {
     let { projectName, userId, pageNumber } = this.state
     return (
       <div className='pv2 ph3'>
-        <h2 className='silver'>获取用户评论信息</h2>
+        <h2 className='silver'>获取用户转发信息</h2>
         {/** 第一位：type = 1 第二位：用户名  第三位：用户id 第四位：爬取页码 第五位：是否要图片 */}
         <div>
           <div>
@@ -57,7 +57,7 @@ class CommentTab extends Component {
             <Input size='small' className='db mt1 w-10' value={userId} name='userId' onChange={this.handleChange} />
           </div>
           <div className='mt2'>
-            <Text>爬取页码</Text>
+            <Text>转发页码</Text>
             <InputNumber size='small' className='db mt1' value={pageNumber} onChange={this.handlePageNumberChange} />
           </div>
           <Button size='small'
@@ -72,4 +72,4 @@ class CommentTab extends Component {
   }
 }
 
-export default CommentTab
+export default RepostForm
