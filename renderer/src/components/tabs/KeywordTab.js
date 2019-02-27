@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 // import PropTypes from 'prop-types'
-import UserForm from '../form/UserForm'
+import KeywordForm from '../form/KeywordForm'
 
 import { Button, Table } from 'antd'
 
@@ -8,11 +8,11 @@ const columns = [{
   title: '索引',
   dataIndex: 'index'
 }, {
-  title: '用户名',
-  dataIndex: 'username'
+  title: '关键词',
+  dataIndex: 'keyWord'
 }, {
-  title: '用户ID',
-  dataIndex: 'userId'
+  title: '搜索方式',
+  dataIndex: 'searchOption'
 }, {
   title: '爬取页码',
   dataIndex: 'pageNumber'
@@ -25,12 +25,12 @@ const columns = [{
 
 const TabelHeader = ({ onClick }) => (
   <div className='flex justify-between items-center'>
-    <h3 className='ma0'>基于用户ID搜索</h3>
+    <h3 className='ma0'>基于关键词搜索</h3>
     <Button type='primary' shape='circle' icon='plus' size='small' onClick={onClick} />
   </div>
 )
 
-class UserTab extends Component {
+class KeywordTab extends Component {
   index = 0
   state = {
     data: [],
@@ -70,7 +70,7 @@ class UserTab extends Component {
           locale={{
             emptyText: '暂无数据'
           }} />
-        <UserForm
+        <KeywordForm
           wrappedComponentRef={this.saveFormRef}
           visible={this.state.visible}
           onCancel={this.handleCancel}
@@ -81,4 +81,4 @@ class UserTab extends Component {
   }
 }
 
-export default UserTab
+export default KeywordTab

@@ -16,13 +16,14 @@ class LayoutComponent extends Component {
   render () {
     const { children, match } = this.props
     return (
-      <Layout className='min-vh-100 bg-near-black ant-layout-has-sider'>
+      <Layout className='min-vh-100 ant-layout-has-sider'>
         <Sider
           collapsible
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
           collapsedWidth={64}
           width={128}
+          className='fixed left-0 vh-100'
         >
           <Menu theme='dark' defaultSelectedKeys={[match.path]} mode='inline'>
             <Menu.Item key='/'>
@@ -51,7 +52,10 @@ class LayoutComponent extends Component {
             </Menu.Item>
           </Menu>
         </Sider>
-        <Layout className='min-vh-100 bg-near-black'>
+        <Layout className='min-vh-100' style={{
+          marginLeft: this.state.collapsed ? '64px' : '128px',
+          transition: 'background 0.3s, margin-left 0.2s'
+        }}>
           <Content>{children}</Content>
         </Layout>
       </Layout>

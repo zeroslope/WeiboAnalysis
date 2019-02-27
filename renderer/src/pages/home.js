@@ -5,11 +5,9 @@ import Layout from '../components/Layout'
 import { jsx, css } from '@emotion/core' // eslint-disable-line
 import { Tabs } from 'antd'
 
-import CommentTab from '../components/form/CommentForm'
-import RepostTab from '../components/form/RepostForm'
-// import UserTab from '../components/form/UserForm'
-
-import KeywordTab from '../components/form/KeywordForm'
+import CommentTab from '../components/tabs/CommentTab'
+import RepostTab from '../components/tabs/RepostTab'
+import KeywordTab from '../components/tabs/KeywordTab'
 import UserTab from '../components/tabs/UserTab'
 
 const TabPane = Tabs.TabPane
@@ -23,23 +21,21 @@ class Index extends Component {
     return (
       <Layout match={this.props.match}>
         <h2 className='silver ml3 mt3'>数据爬取</h2>
-        <section className='relative overflow-hidden' css={{
+        <section className='relative overflow-hidden ph3' css={{
           paddingTop: '1rem'
         }}>
-          <Tabs tabPosition='left' className='pt3'>
-            <TabPane tab='基于用户ID搜索' key='1'>
-              <UserTab />
-            </TabPane>
-            <TabPane tab='基于关键词搜索' key='2'>
-              <KeywordTab />
-            </TabPane>
-            <TabPane tab='用户转发信息获取' key='3'>
-              <RepostTab />
-            </TabPane>
-            <TabPane tab='用户评论信息获取' key='4'>
-              <CommentTab />
-            </TabPane>
-          </Tabs>
+          <div className='shadow-4 br2'>
+            <UserTab />
+          </div>
+          <div className='mt3 shadow-4 br2'>
+            <KeywordTab />
+          </div>
+          <div className='mt3 shadow-4 br2'>
+            <RepostTab />
+          </div>
+          <div className='mt3 shadow-4 br2'>
+            <CommentTab />
+          </div>
         </section>
       </Layout>
     )

@@ -14,8 +14,8 @@ body {
   -webkit-font-smoothing: antialiased;
   font-size: 16px;
   min-height: 100vh;
-  color: white;
-  color: rgba(255, 255, 255, 0.95);
+  /* color: white; */
+  /* color: rgba(255, 255, 255, 0.95); */
   text-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
 }
 
