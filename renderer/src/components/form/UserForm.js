@@ -47,7 +47,9 @@ class UserForm extends Component {
             )}
           </Form.Item>
           <Form.Item label='是否爬取图片'>
-            {getFieldDecorator('isNeedImage')(
+            {getFieldDecorator('isNeedImage', {
+              initialValue: false
+            })(
               <Switch className='db mt1' checkedChildren='是' unCheckedChildren='否' />
             )}
           </Form.Item>

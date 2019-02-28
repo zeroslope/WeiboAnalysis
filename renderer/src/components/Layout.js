@@ -18,6 +18,7 @@ class LayoutComponent extends Component {
     return (
       <Layout className='min-vh-100 ant-layout-has-sider'>
         <Sider
+          theme='dark'
           collapsible
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}

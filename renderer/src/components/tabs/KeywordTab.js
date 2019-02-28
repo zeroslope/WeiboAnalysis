@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import KeywordForm from '../form/KeywordForm'
-
+import { addKeyword } from '../../actions/scrapy'
 import { Button, Table } from 'antd'
 
 const columns = [{
@@ -36,11 +37,15 @@ const TabelHeader = ({ onClick }) => (
 )
 
 class KeywordTab extends Component {
+  static propTypes = {
+    data: PropTypes.array.isRequired,
+    submit: PropTypes.func.isRequired
+  }
+
   index = 0
   state = {
-    data: [],
     visible: false
-  };
+  }
 
   showModal = () => this.setState({ visible: true })
 
@@ -55,14 +60,15 @@ class KeywordTab extends Component {
       form.resetFields()
       values.index = this.index
       this.index++
-      this.setState({ data: [...this.state.data, values], visible: false })
+      this.props.submit(values)
+      this.setState({ visible: false })
     })
   }
 
   saveFormRef = (formRef) => { this.formRef = formRef }
 
   render () {
-    const { data } = this.state
+    const { data } = this.props
     return (
       <div>
         <Table
@@ -86,4 +92,8 @@ class KeywordTab extends Component {
   }
 }
 
-export default KeywordTab
+const mapStateToProps = (state) => ({
+  data: state.keyword
+})
+
+export default connect(mapStateToProps, { submit: addKeyword })(KeywordTab)
