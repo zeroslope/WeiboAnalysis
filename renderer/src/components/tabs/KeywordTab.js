@@ -6,19 +6,24 @@ import { Button, Table } from 'antd'
 
 const columns = [{
   title: '索引',
-  dataIndex: 'index'
+  dataIndex: 'index',
+  align: 'center'
 }, {
   title: '关键词',
-  dataIndex: 'keyWord'
+  dataIndex: 'keyWord',
+  align: 'center'
 }, {
   title: '搜索方式',
-  dataIndex: 'searchOption'
+  dataIndex: 'searchOption',
+  align: 'center'
 }, {
   title: '爬取页码',
-  dataIndex: 'pageNumber'
+  dataIndex: 'pageNumber',
+  align: 'center'
 }, {
   title: '是否需要图片',
   dataIndex: 'isNeedImage',
+  align: 'center',
   render: isNeedImage => (<span>{isNeedImage ? '是' : '否'}</span>)
 }
 ]

@@ -6,16 +6,20 @@ import { Button, Table } from 'antd'
 
 const columns = [{
   title: '索引',
-  dataIndex: 'index'
+  dataIndex: 'index',
+  align: 'center'
 }, {
   title: '关键词',
-  dataIndex: 'projectName'
+  dataIndex: 'projectName',
+  align: 'center'
 }, {
   title: '用户ID',
-  dataIndex: 'userId'
+  dataIndex: 'userId',
+  align: 'center'
 }, {
   title: '转发页码',
-  dataIndex: 'pageNumber'
+  dataIndex: 'pageNumber',
+  align: 'center'
 }
 ]
 
