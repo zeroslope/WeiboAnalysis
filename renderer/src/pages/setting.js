@@ -65,14 +65,14 @@ class Setting extends Component {
             <form onSubmit={this.handleSubmit}>
               <div>
                 <Text>通行证书</Text>
-                <Input size='small' className='db mt1 w-10' value={certificate} name='certificate'
+                <Input size='small' className='db mt1 w-20' value={certificate} name='certificate'
                   disabled={isDisabled}
                   onChange={this.handleChange}
                 />
               </div>
               <div className='mt2'>
                 <Text>通行密钥</Text>
-                <Input size='small' className='db mt1 w-10' value={password} name='password'
+                <Input.Password size='small' className='db mt1 w-20' value={password} name='password' type='password'
                   disabled={isDisabled}
                   onChange={this.handleChange}
                 />
