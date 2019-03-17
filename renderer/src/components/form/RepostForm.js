@@ -32,8 +32,8 @@ class RepostForm extends Component {
               <Input size='small' className='db mt1 w-10' name='projectName' />
             )}
           </Form.Item>
-          <Form.Item label='用户ID'>
-            {getFieldDecorator('userId', {
+          <Form.Item label='微博ID'>
+            {getFieldDecorator('weiboId', {
               rules: [{ required: true, message: '请输入微博用户ID' }]
             })(
               <Input size='small' className='db mt1 w-10' name='userId' />

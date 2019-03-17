@@ -28,7 +28,7 @@ class KeywordForm extends Component {
       >
         <Form layout='vertical'>
           <Form.Item label='关键词'>
-            {getFieldDecorator('keyWord', {
+            {getFieldDecorator('keyword', {
               rules: [{ required: true, message: '请输入微博用户名' }]
             })(
               <Input size='small' className='db mt1 w-10' name='username' />

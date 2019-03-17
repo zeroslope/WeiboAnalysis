@@ -1,4 +1,4 @@
-const { exec } = require('child_process')
+const { exec, spawn } = require('child_process')
 const { join } = require('path')
 const { format } = require('url')
 const { resolve } = require('app-root-path')
@@ -8,33 +8,93 @@ const isDev = require('electron-is-dev')
 // const path = require('path')
 // const url = require('url')
 
-ipcMain.on('search-by-keyword', (event, arg) => {
-  const { type, keyWord, searchOption, pageNumber, isNeedImage } = arg
-  const cmd = `scrapy crawl weibo -a line=${type},${keyWord},${searchOption},${pageNumber},${isNeedImage ? 'True' : 'False'}@_@`
-  // console.log(cmd)
-  event.sender.send('search-by-keyword', cmd)
-  let venv = join(process.cwd(), '../venv/bin/activate')
-  // console.log(venv)
-  exec(`source ${venv} && cd ../weibo_scrapy && ${cmd}`, function (err, stdout, stderr) {
-    // console.log(stdout)
-    event.sender.send('search-by-keyword', stdout.length)
-    if (err) {
-      console.info('stderr : ' + stderr)
-    }
+ipcMain.on('search-by-keyword', (event, args) => {
+  let r = args
+    .map(arg => {
+      const { keyword, searchOption, pageNumber, isNeedImage } = arg
+      return `${2},${keyword},${searchOption},${pageNumber},${isNeedImage ? 'True' : 'False'}`
+    })
+    .join('@_@')
+  console.log(r)
+  let child = spawn('/Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python', ['/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/entrypoint.py', 'weibo', r], {
+    cwd: '/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy'
+  })
+  // child.on('error', console.error)
+  child.stdout.on('data', (data) => {
+    console.log('data', data.toString())
+    event.sender.send('search-by-keyword',
+      data.toString())
+  })
+  child.stderr.on('data', (data) => {
+    console.log('error', data.toString())
   })
 })
 
-ipcMain.on('search-by-user', (event, arg) => {
-  const { type, username, userId, pageNumber, isNeedImage } = arg
-  const cmd = `scrapy crawl weibo -a line=${type},${username},${userId},${pageNumber},${isNeedImage ? 'True' : 'False'}@_@`
-  // event.sender.send('search-by-user', cmd)
-  let venv = join(process.cwd(), '../venv/bin/activate')
-  exec(`source ${venv} && cd ../weibo_scrapy && ${cmd}`, function (err, stdout, stderr) {
-    console.log(stdout)
-    event.sender.send('search-by-user', stdout.length)
-    if (err) {
-      console.info('stderr : ' + stderr)
-    }
+ipcMain.on('search-by-user', (event, args) => {
+  let r = args
+    .map(arg => {
+      const { username, userId, pageNumber, isNeedImage } = arg
+      return `${1},${username},${userId},${pageNumber},${isNeedImage ? 'True' : 'False'}`
+    })
+    .join('@_@')
+  console.log(r)
+  let child = spawn('/Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python', ['/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/entrypoint.py', 'weibo', r], {
+    cwd: '/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy'
+  })
+  // child.on('error', console.error)
+  child.stdout.on('data', (data) => {
+    console.log('data', data.toString())
+    event.sender.send('search-by-user', data.toString())
+  })
+  child.stdout.on('end', (data) => {
+    console.log('END! ', r)
+  })
+  child.stderr.on('data', (data) => {
+    console.log('error', data.toString())
+    event.sender.send('search-by-user', data.toString())
+  })
+})
+
+ipcMain.on('search-by-repost', (event, args) => {
+  let r = args
+    .map(arg => {
+      const { projectName, weiboId, pageNumber } = arg
+      return `${projectName},${weiboId},${pageNumber}`
+    })
+    .join('@_@')
+  console.log(r)
+  let child = spawn('/Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python', ['/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/entrypoint.py', 'repost', r], {
+    cwd: '/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy'
+  })
+  // child.on('error', console.error)
+  child.stdout.on('data', (data) => {
+    console.log('data', data.toString())
+    event.sender.send('search-by-repost',
+      data.toString())
+  })
+  child.stderr.on('data', (data) => {
+    console.log('error', data.toString())
+  })
+})
+
+ipcMain.on('search-by-comment', (event, args) => {
+  let r = args
+    .map(arg => {
+      const { projectName, weiboId, pageNumber } = arg
+      return `${projectName},${weiboId},${pageNumber}`
+    })
+    .join('@_@')
+  console.log(r)
+  let child = spawn('/Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python', ['/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/entrypoint.py', 'comment', r], {
+    cwd: '/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy'
+  })
+  // child.on('error', console.error)
+  child.stdout.on('data', (data) => {
+    console.log('data', data.toString())
+    event.sender.send('search-by-comment', data.toString())
+  })
+  child.stderr.on('data', (data) => {
+    console.log('error', data.toString())
   })
 })
 
@@ -90,8 +150,6 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   mainWindow.loadURL(url)
-
-  console.log('hello')
 
   // Open the DevTools.
   // if (isDev)
