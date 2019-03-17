@@ -85,7 +85,7 @@ class KeywordTab extends Component {
       form.resetFields()
       const newData = {
         ...values,
-        index: this.state.index
+        index: this.props.data.length
 
       }
       this.props.submit(newData)

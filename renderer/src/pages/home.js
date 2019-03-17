@@ -21,7 +21,7 @@ class Index extends Component {
     return (
       <Layout match={this.props.match}>
         <h2 className='silver ml3 mt3'>数据爬取</h2>
-        <Tabs tabPosition='left' className='relative overflow-hidden ph3 pb3 pt2'>
+        <Tabs tabPosition='top' className='relative overflow-hidden ph3 pb3 pt2'>
           <TabPane tab='基于用户ID搜索' key='1'>
             <UserTab />
           </TabPane>
