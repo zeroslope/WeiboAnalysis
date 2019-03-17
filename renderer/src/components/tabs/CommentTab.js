@@ -67,6 +67,12 @@ class CommentTab extends Component {
     }
   }
 
+  componentWillUnmount () {
+    if (this.ipcRenderer) {
+      this.ipcRenderer.removeAllListeners('search-by-comment')
+    }
+  }
+
   startScrapy = () => {
     this.ipcRenderer.send('search-by-comment', this.props.data)
   }

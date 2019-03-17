@@ -77,6 +77,12 @@ class UserTab extends Component {
     }
   }
 
+  componentWillUnmount () {
+    if (this.ipcRenderer) {
+      this.ipcRenderer.removeAllListeners('search-by-user')
+    }
+  }
+
   startScrapy = () => {
     this.ipcRenderer.send('search-by-user', this.props.data)
   }

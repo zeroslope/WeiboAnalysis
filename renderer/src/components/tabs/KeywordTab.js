@@ -82,6 +82,12 @@ class KeywordTab extends Component {
     }
   }
 
+  componentWillUnmount () {
+    if (this.ipcRenderer) {
+      this.ipcRenderer.removeAllListeners('search-by-keyword')
+    }
+  }
+
   startScrapy = () => {
     this.ipcRenderer.send('search-by-keyword', this.props.data)
   }

@@ -1,0 +1,39 @@
+const { execSync } = require('child_process')
+
+const typeMapper = {
+  '-1': '用户抓取',
+  '1': '综合抓取',
+  '60': '热门抓取',
+  '61': '实时抓取',
+  '100': '微博转发',
+  '101': '微博评论'
+}
+
+const getHistory = () => {
+  const cmd = `cd /Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy && /Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python /Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/history_record.py get`
+  try {
+    const stdout = execSync(cmd)
+    const data = JSON.parse(stdout.toString())
+    let index = 1
+    let res = []
+    for (const key of Object.keys(data)) {
+      // console.log(key)
+      let items = data[key]
+      // console.log(items)
+      res = res.concat(
+        items.map(item => ({
+          index: index++,
+          name: item.key,
+          typeOriginal: item.type,
+          count: parseInt(item.count),
+          type: typeMapper[item.type]
+        }))
+      )
+    }
+    return res
+  } catch (err) {
+    throw err
+  }
+}
+
+module.exports = getHistory

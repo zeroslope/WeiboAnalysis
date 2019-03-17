@@ -1,102 +1,13 @@
-const { exec, spawn } = require('child_process')
+const { exec } = require('child_process')
 const { join } = require('path')
 const { format } = require('url')
 const { resolve } = require('app-root-path')
 const { app, BrowserWindow, ipcMain } = require('electron')
 const isDev = require('electron-is-dev')
+const ipcWithScrapy = require('./ipcWithScrapy')
 
 // const path = require('path')
 // const url = require('url')
-
-ipcMain.on('search-by-keyword', (event, args) => {
-  let r = args
-    .map(arg => {
-      const { keyword, searchOption, pageNumber, isNeedImage } = arg
-      return `${2},${keyword},${searchOption},${pageNumber},${isNeedImage ? 'True' : 'False'}`
-    })
-    .join('@_@')
-  console.log(r)
-  let child = spawn('/Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python', ['/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/entrypoint.py', 'weibo', r], {
-    cwd: '/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy'
-  })
-  // child.on('error', console.error)
-  child.stdout.on('data', (data) => {
-    console.log('data', data.toString())
-    event.sender.send('search-by-keyword',
-      data.toString())
-  })
-  child.stderr.on('data', (data) => {
-    console.log('error', data.toString())
-  })
-})
-
-ipcMain.on('search-by-user', (event, args) => {
-  let r = args
-    .map(arg => {
-      const { username, userId, pageNumber, isNeedImage } = arg
-      return `${1},${username},${userId},${pageNumber},${isNeedImage ? 'True' : 'False'}`
-    })
-    .join('@_@')
-  console.log(r)
-  let child = spawn('/Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python', ['/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/entrypoint.py', 'weibo', r], {
-    cwd: '/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy'
-  })
-  // child.on('error', console.error)
-  child.stdout.on('data', (data) => {
-    console.log('data', data.toString())
-    event.sender.send('search-by-user', data.toString())
-  })
-  child.stdout.on('end', (data) => {
-    console.log('END! ', r)
-  })
-  child.stderr.on('data', (data) => {
-    console.log('error', data.toString())
-    event.sender.send('search-by-user', data.toString())
-  })
-})
-
-ipcMain.on('search-by-repost', (event, args) => {
-  let r = args
-    .map(arg => {
-      const { projectName, weiboId, pageNumber } = arg
-      return `${projectName},${weiboId},${pageNumber}`
-    })
-    .join('@_@')
-  console.log(r)
-  let child = spawn('/Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python', ['/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/entrypoint.py', 'repost', r], {
-    cwd: '/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy'
-  })
-  // child.on('error', console.error)
-  child.stdout.on('data', (data) => {
-    console.log('data', data.toString())
-    event.sender.send('search-by-repost',
-      data.toString())
-  })
-  child.stderr.on('data', (data) => {
-    console.log('error', data.toString())
-  })
-})
-
-ipcMain.on('search-by-comment', (event, args) => {
-  let r = args
-    .map(arg => {
-      const { projectName, weiboId, pageNumber } = arg
-      return `${projectName},${weiboId},${pageNumber}`
-    })
-    .join('@_@')
-  console.log(r)
-  let child = spawn('/Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python', ['/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/entrypoint.py', 'comment', r], {
-    cwd: '/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy'
-  })
-  // child.on('error', console.error)
-  child.stdout.on('data', (data) => {
-    console.log('data', data.toString())
-    event.sender.send('search-by-comment', data.toString())
-  })
-  child.stderr.on('data', (data) => {
-    console.log('error', data.toString())
-  })
-})
 
 ipcMain.on('change-proxy', (event, arg) => {
   const { certificate, password } = arg
@@ -148,12 +59,13 @@ const createWindow = () => {
 
   console.log(url)
 
+  ipcWithScrapy.addListener()
+
   // and load the index.html of the app.
   mainWindow.loadURL(url)
 
   // Open the DevTools.
-  // if (isDev)
-  mainWindow.webContents.openDevTools()
+  if (isDev) { mainWindow.webContents.openDevTools() }
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -173,6 +85,7 @@ app.on('ready', createWindow)
 app.on('window-all-closed', function () {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
+  ipcWithScrapy.deleteListener()
   if (process.platform !== 'darwin') {
     app.quit()
   }
