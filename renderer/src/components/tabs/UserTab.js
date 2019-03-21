@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import UserForm from '../form/UserForm'
-import { addUser, delUser } from '../../actions/scrapy'
-import { Button, Table, Popconfirm } from 'antd'
+import { addUser, delUser, setScrapy } from '../../actions/scrapy'
+import { Button, Table, Popconfirm, message } from 'antd'
 
 const TabelHeader = ({ add, start }) => (
   <div className='flex justify-between items-center'>
@@ -26,7 +26,8 @@ class UserTab extends Component {
   columns = [{
     title: '索引',
     dataIndex: 'index',
-    align: 'center'
+    align: 'center',
+    width: 100
   }, {
     title: '项目名称',
     dataIndex: 'username',
@@ -34,23 +35,27 @@ class UserTab extends Component {
   }, {
     title: '用户ID',
     dataIndex: 'userId',
-    align: 'center'
+    align: 'center',
+    width: 300
   }, {
     title: '爬取页码',
     dataIndex: 'pageNumber',
-    align: 'center'
+    align: 'center',
+    width: 100
   }, {
     title: '是否需要图片',
     dataIndex: 'isNeedImage',
     align: 'center',
+    width: 100,
     render: isNeedImage => (<span>{isNeedImage ? '是' : '否'}</span>)
   }, {
     title: '操作',
     dataIndex: 'operation',
+    width: 100,
     render: (text, record) => (
       this.props.data.length >= 1
         ? (
-          <Popconfirm title='是否需要删除？' cancelText='取消' onConfirm={() => this.handleDelete(record.index)}>
+          <Popconfirm title='是否需要删除？' onConfirm={() => this.handleDelete(record.index)}>
             <a href='javascript:;'>删除</a>
           </Popconfirm>
         ) : null
@@ -61,21 +66,19 @@ class UserTab extends Component {
   state = {
     index: 0,
     visible: false,
-    text: `大陆开始疯狂拉风萨拉萨了是否离开啊；十分骄傲了；发；发力；司法局；按揭房；
-    asfasfasfasfaaaafafas
-    asfafasmk;;kasd'ka[pfsa=fasfjafslasnlnsa]
-    `
+    loading: false,
+    text: ``
   };
 
-  componentDidMount () {
-    if (this.ipcRenderer) {
-      console.log('on')
-      this.ipcRenderer.on('search-by-user', (event, data) => {
-        console.log(data)
-        this.setState({ text: this.state.text + data })
-      })
-    }
-  }
+  // componentDidMount () {
+  //   if (this.ipcRenderer) {
+  //     // console.log('on')
+  //     this.ipcRenderer.on('search-by-user', (event, data) => {
+  //       console.log(data)
+  //       this.setState({ text: this.state.text + data })
+  //     })
+  //   }
+  // }
 
   componentWillUnmount () {
     if (this.ipcRenderer) {
@@ -84,7 +87,24 @@ class UserTab extends Component {
   }
 
   startScrapy = () => {
-    this.ipcRenderer.send('search-by-user', this.props.data)
+    if (this.ipcRenderer) {
+      this.props.setScrapy(1)
+      this.setState({ loading: true })
+      // console.log('on')
+      this.ipcRenderer.on('search-by-user', (event, data) => {
+        console.log(data)
+        if (!data.end) {
+          this.setState({ text: this.state.text + data.data })
+          this.textArea.scrollTop = this.textArea.scrollHeight
+        } else {
+          this.props.setScrapy(-1)
+          this.setState({ loading: false })
+          message.info('基于用户ID数据爬取完成')
+          this.ipcRenderer.removeAllListeners('search-by-user')
+        }
+      })
+      this.ipcRenderer.send('search-by-user', this.props.data)
+    }
   }
 
   showModal = () => this.setState({ visible: true })
@@ -121,7 +141,7 @@ class UserTab extends Component {
   render () {
     const { data } = this.props
     return (
-      <div>
+      <div className='relative' style={{ height: 'calc(100vh - 148px)' }}>
         <Table
           pagination={false}
           rowKey='index'
@@ -131,14 +151,17 @@ class UserTab extends Component {
           title={() => <TabelHeader add={this.showModal} start={this.startScrapy} />}
           locale={{
             emptyText: '暂无数据'
-          }} />
+          }}
+          loading={this.state.loading}
+          scroll={{ y: window.innerHeight - 140 - 128 - 96 }}
+        />
         <UserForm
           wrappedComponentRef={this.saveFormRef}
           visible={this.state.visible}
           onCancel={this.handleCancel}
           onCreate={this.handleCreate}
         />
-        <div className='vh-25 overflow-scroll shadow-3 mt3'>
+        <div className='h4 overflow-scroll shadow-3 mt3 absolute left-0 right-0 bottom-0' ref={input => { this.textArea = input }}>
           <pre className='f7'>{this.state.text}</pre>
         </div>
       </div>
@@ -150,4 +173,4 @@ const mapStateToProps = (state) => ({
   data: state.user
 })
 
-export default connect(mapStateToProps, { submit: addUser, delete: delUser })(UserTab)
+export default connect(mapStateToProps, { submit: addUser, delete: delUser, setScrapy })(UserTab)

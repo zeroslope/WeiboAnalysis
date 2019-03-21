@@ -39,14 +39,23 @@ const addListener = () => {
     // child.on('error', console.error)
     child.stdout.on('data', (data) => {
       console.log('data', data.toString())
-      event.sender.send('search-by-user', data.toString())
+      event.sender.send('search-by-user', {
+        end: false,
+        data: data.toString()
+      })
     })
-    child.stdout.on('end', (data) => {
+    child.stdout.on('end', () => {
       console.log('END! ', r)
+      event.sender.send('search-by-user', {
+        end: true
+      })
     })
     child.stderr.on('data', (data) => {
       console.log('error', data.toString())
-      event.sender.send('search-by-user', data.toString())
+      event.sender.send('search-by-user', {
+        end: false,
+        data: data.toString()
+      })
     })
   })
 
@@ -96,6 +105,7 @@ const addListener = () => {
 
 const deleteListener = () => {
   for (const channel of channels) {
+    console.log(channel)
     ipcMain.removeAllListeners(channel)
   }
 }

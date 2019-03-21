@@ -1,20 +1,27 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import { Layout, Icon, Menu } from 'antd'
 const { Content, Sider } = Layout
 
 class LayoutComponent extends Component {
   state = {
-    collapsed: true
+    collapsed: true,
+    isScrapying: this.props.isScrapying
   }
 
   onCollapse = (collapsed) => {
     this.setState({ collapsed })
   }
 
+  componentWillReceiveProps (props) {
+    this.setState({ isScrapying: props.isScrapying })
+  }
+
   render () {
     const { children, match } = this.props
+    const { isScrapying } = this.state
     return (
       <Layout className='min-vh-100 ant-layout-has-sider'>
         <Sider
@@ -25,6 +32,7 @@ class LayoutComponent extends Component {
           collapsedWidth={64}
           width={128}
           className='fixed left-0 vh-100'
+          disabled={isScrapying > 0}
         >
           <Menu theme='dark' defaultSelectedKeys={[match.path]} mode='inline'>
             <Menu.Item key='/'>
@@ -35,7 +43,7 @@ class LayoutComponent extends Component {
                 </div>
               </Link>
             </Menu.Item>
-            <Menu.Item key='/record'>
+            <Menu.Item key='/record' disabled={isScrapying}>
               <Link to='/record'>
                 <div>
                   <Icon type='profile' />
@@ -43,7 +51,7 @@ class LayoutComponent extends Component {
                 </div>
               </Link>
             </Menu.Item>
-            <Menu.Item key='/setting'>
+            <Menu.Item key='/setting' disabled={isScrapying}>
               <Link to='/setting'>
                 <div>
                   <Icon type='setting' />
@@ -64,4 +72,8 @@ class LayoutComponent extends Component {
   }
 }
 
-export default LayoutComponent
+const mapStateToProps = (state) => ({
+  isScrapying: state.control.isScrapying
+})
+
+export default connect(mapStateToProps)(LayoutComponent)

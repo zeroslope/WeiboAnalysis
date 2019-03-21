@@ -58,7 +58,7 @@ class KeywordTab extends Component {
     render: (text, record) => (
       this.props.data.length >= 1
         ? (
-          <Popconfirm title='是否需要删除？' cancelText='取消' onConfirm={() => this.handleDelete(record.index)}>
+          <Popconfirm title='是否需要删除？' onConfirm={() => this.handleDelete(record.index)}>
             <a href='javascript:;'>删除</a>
           </Popconfirm>
         ) : null
