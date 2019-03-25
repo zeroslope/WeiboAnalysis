@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import KeywordForm from '../form/KeywordForm'
-import { addKeyword, delKeyword } from '../../actions/scrapy'
-import { Button, Table, Popconfirm } from 'antd'
+import { addKeyword, delKeyword, setScrapy } from '../../actions/scrapy'
+import { Button, Table, Popconfirm, message } from 'antd'
 
 const TabelHeader = ({ add, start }) => (
   <div className='flex justify-between items-center'>
@@ -21,10 +21,13 @@ class KeywordTab extends Component {
     submit: PropTypes.func.isRequired
   }
 
+  ipcRenderer = window.electron.ipcRenderer || false
+
   columns = [{
     title: '索引',
     dataIndex: 'index',
-    align: 'center'
+    align: 'center',
+    width: 100
   }, {
     title: '关键词',
     dataIndex: 'keyword',
@@ -33,6 +36,7 @@ class KeywordTab extends Component {
     title: '搜索方式',
     dataIndex: 'searchOption',
     align: 'center',
+    width: 100,
     render: (text, record) => {
       switch (record.searchOption) {
         case '1':
@@ -46,15 +50,19 @@ class KeywordTab extends Component {
   }, {
     title: '爬取页码',
     dataIndex: 'pageNumber',
-    align: 'center'
+    align: 'center',
+    width: 100
   }, {
     title: '是否需要图片',
     dataIndex: 'isNeedImage',
     align: 'center',
+    width: 100,
     render: isNeedImage => (<span>{isNeedImage ? '是' : '否'}</span>)
   }, {
     title: '操作',
     dataIndex: 'operation',
+    align: 'center',
+    width: 100,
     render: (text, record) => (
       this.props.data.length >= 1
         ? (
@@ -69,18 +77,19 @@ class KeywordTab extends Component {
   state = {
     index: 0,
     visible: false,
+    loading: false,
     text: ''
   }
 
-  componentDidMount () {
-    if (this.ipcRenderer) {
-      console.log('on')
-      this.ipcRenderer.on('search-by-keyword', (event, data) => {
-        console.log(data)
-        this.setState({ text: this.state.text + data })
-      })
-    }
-  }
+  // componentDidMount () {
+  //   if (this.ipcRenderer) {
+  //     console.log('on')
+  //     this.ipcRenderer.on('search-by-keyword', (event, data) => {
+  //       console.log(data)
+  //       this.setState({ text: this.state.text + data })
+  //     })
+  //   }
+  // }
 
   componentWillUnmount () {
     if (this.ipcRenderer) {
@@ -89,7 +98,24 @@ class KeywordTab extends Component {
   }
 
   startScrapy = () => {
-    this.ipcRenderer.send('search-by-keyword', this.props.data)
+    console.log('start')
+    if (this.ipcRenderer) {
+      this.props.setScrapy(1)
+      this.setState({ loading: true })
+      this.ipcRenderer.on('search-by-keyword', (event, data) => {
+        console.log(data)
+        if (!data.end) {
+          this.setState({ text: this.state.text + data.data })
+          this.textArea.scrollTop = this.textArea.scrollHeight
+        } else {
+          this.props.setScrapy(-1)
+          this.setState({ loading: false })
+          message.info('基于关键字数据爬取完成')
+          this.ipcRenderer.removeAllListeners('search-by-keyword')
+        }
+      })
+      this.ipcRenderer.send('search-by-keyword', this.props.data)
+    }
   }
 
   showModal = () => this.setState({ visible: true })
@@ -125,7 +151,7 @@ class KeywordTab extends Component {
   render () {
     const { data } = this.props
     return (
-      <div>
+      <div className='relative' style={{ height: 'calc(100vh - 148px)' }}>
         <Table
           pagination={false}
           rowKey='index'
@@ -135,14 +161,19 @@ class KeywordTab extends Component {
           title={() => <TabelHeader add={this.showModal} start={this.startScrapy} />}
           locale={{
             emptyText: '暂无数据'
-          }} />
+          }}
+          loading={this.state.loading}
+          scroll={{ y: window.innerHeight - 140 - 128 - 96 }}
+        />
         <KeywordForm
           wrappedComponentRef={this.saveFormRef}
           visible={this.state.visible}
           onCancel={this.handleCancel}
           onCreate={this.handleCreate}
         />
-        <pre>{this.state.text}</pre>
+        <div className='h4 overflow-scroll shadow-3 mt3 absolute left-0 right-0 bottom-0' ref={input => { this.textArea = input }}>
+          <pre className='f7'>{this.state.text}</pre>
+        </div>
       </div>
     )
   }
@@ -152,4 +183,4 @@ const mapStateToProps = (state) => ({
   data: state.keyword
 })
 
-export default connect(mapStateToProps, { submit: addKeyword, delete: delKeyword })(KeywordTab)
+export default connect(mapStateToProps, { submit: addKeyword, delete: delKeyword, setScrapy })(KeywordTab)

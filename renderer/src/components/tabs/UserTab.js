@@ -51,6 +51,7 @@ class UserTab extends Component {
   }, {
     title: '操作',
     dataIndex: 'operation',
+    align: 'center',
     width: 100,
     render: (text, record) => (
       this.props.data.length >= 1

@@ -73,7 +73,7 @@ class LayoutComponent extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isScrapying: state.control.isScrapying
+  isScrapying: state.control.isScrapying > 0
 })
 
 export default connect(mapStateToProps)(LayoutComponent)
