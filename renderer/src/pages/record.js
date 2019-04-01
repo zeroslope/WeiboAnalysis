@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Layout from '../components/Layout'
 import { Table, message } from 'antd'
 const BrowserWindow = window.electron.remote.BrowserWindow
+const dialog = window.electron.remote.dialog
+
 const join = window.require('path').join
 
 const typeFilter = ['用户抓取', '综合抓取', '热门抓取', '实时抓取', '微博转发', '微博评论']
@@ -43,7 +45,7 @@ class Record extends Component {
     key: 'action',
     align: 'center',
     render: (text, record) => (
-      <a href='javascript:;' onClick={() => this.isExportExcelSuccessful(record.typeOriginal, record.name)}>导出</a>
+      <a href='javascript:;' onClick={() => this.isExportExcelSuccessful(record.typeOriginal, record.type, record.name)}>导出</a>
     )
   }, {
     title: '分析',
@@ -51,7 +53,7 @@ class Record extends Component {
     align: 'center',
     render: (text, record) => {
       let pathname
-      console.log(record.typeOriginal)
+      // console.log(record.typeOriginal)
       switch (record.typeOriginal) {
         case '-1':
         case '1':
@@ -78,7 +80,7 @@ class Record extends Component {
           }
         })
         win.on('close', () => { win = null })
-        console.log(window.isDev)
+        // console.log(window.isDev)
         if (window.isDev) {
           win.loadURL('http://localhost:1234#' + pathname)
         } else {
@@ -100,7 +102,6 @@ class Record extends Component {
   }]
 
   componentDidMount () {
-    console.log(window.prodPath)
     if (this.getHistory) {
       let history = this.getHistory()
       // console.log(history)
@@ -108,12 +109,19 @@ class Record extends Component {
     }
   }
 
-  isExportExcelSuccessful (type, name) {
-    const res = this.exportExcel(type, name)
-    if (res) {
-      message.success('导出成功', 1.5)
-    } else {
-      message.error('导出失败，请尝试F5刷新页面或者重新启动应用！')
+  isExportExcelSuccessful (typeOriginal, type, name) {
+    const filepath = dialog.showSaveDialog({
+      defaultPath: `${type}-${name}`,
+      title: '导出',
+      buttonLabel: '导出'
+    })
+    if (filepath) {
+      const res = this.exportExcel(typeOriginal, name)
+      if (res) {
+        message.success('导出成功', 1.5)
+      } else {
+        message.error('导出失败，请尝试F5刷新页面或者重新启动应用！')
+      }
     }
   }
 

@@ -41,11 +41,11 @@ export class weibo extends Component {
   }
 
   componentWillMount () {
-    console.log(this.props.match)
+    // console.log(this.props.match)
     //  console.log(this.props.location)
     if (this.getWeibo) {
       const { key } = this.props.match.params
-      console.log(101, key)
+      // console.log(101, key)
       let data = this.getWeibo(101, key)
       // console.log(data)
       const commentNum = data.comment_num

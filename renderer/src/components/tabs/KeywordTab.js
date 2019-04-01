@@ -98,12 +98,12 @@ class KeywordTab extends Component {
   }
 
   startScrapy = () => {
-    console.log('start')
+    // console.log('start')
     if (this.ipcRenderer) {
       this.props.setScrapy(1)
       this.setState({ loading: true })
       this.ipcRenderer.on('search-by-keyword', (event, data) => {
-        console.log(data)
+        // console.log(data)
         if (!data.end) {
           this.setState({ text: this.state.text + data.data })
           this.textArea.scrollTop = this.textArea.scrollHeight
@@ -142,7 +142,7 @@ class KeywordTab extends Component {
   }
 
   handleDelete = (index) => {
-    console.log(index)
+    // console.log(index)
     this.props.delete(index)
   }
 

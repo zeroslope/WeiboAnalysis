@@ -44,7 +44,7 @@ export class weibo extends Component {
   componentWillMount () {
     if (this.getWeibo) {
       const { key } = this.props.match.params
-      console.log(100, key)
+      // console.log(100, key)
       let data = this.getWeibo(100, key)
       // console.log(data)
       const repostNum = data.repost_num

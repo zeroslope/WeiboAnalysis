@@ -14,7 +14,7 @@ ipcMain.on('change-proxy', (event, arg) => {
   const cmd = `python modify_proxy.py ${certificate} ${password}`
   let venv = join(process.cwd(), '../venv/bin/activate')
   exec(`source ${venv} && cd ../weibo_scrapy && ${cmd}`, function (err, stdout, stderr) {
-    console.log(stdout)
+    // console.log(stdout)
     event.sender.send('search-by-user', stdout.length)
     if (err) {
       console.info('stderr : ' + stderr)
@@ -57,7 +57,7 @@ const createWindow = () => {
 
   const url = isDevEnv ? devPath : prodPath
 
-  console.log(url)
+  // console.log(url)
 
   ipcWithScrapy.addListener()
 

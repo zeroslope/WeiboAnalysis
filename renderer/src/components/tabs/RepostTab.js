@@ -85,7 +85,7 @@ class KeywordTab extends Component {
     this.setState({ loading: true })
     // console.log('on')
     this.ipcRenderer.on('search-by-repost', (event, data) => {
-      console.log(data)
+      // console.log(data)
       if (!data.end) {
         this.setState({ text: this.state.text + data.data })
         this.textArea.scrollTop = this.textArea.scrollHeight
@@ -124,7 +124,7 @@ class KeywordTab extends Component {
   }
 
   handleDelete = (index) => {
-    console.log(index)
+    // console.log(index)
     this.props.delete(index)
   }
 

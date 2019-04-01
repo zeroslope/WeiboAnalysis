@@ -42,11 +42,11 @@ export class weibo extends Component {
   }
 
   componentWillMount () {
-    console.log(this.props.match)
+    // console.log(this.props.match)
     //  console.log(this.props.location)
     if (this.getWeibo) {
       const { key, type } = this.props.match.params
-      console.log(type, key)
+      // console.log(type, key)
       const P = new Promise((resolve, reject) => {
         resolve(this.getWeibo(type, key))
       }).then((data) => {
@@ -81,7 +81,6 @@ export class weibo extends Component {
     const { weiboNum, timeline, followers, verifyType, keyCloud } = this.state
     return (
       <div className='pa2 vh-100'>
-        <Link to='/record'>record</Link>
         <h1 className='ml4 mt0'>{`${typeMapper[type]}: ${key}`}</h1>
         <div className='flex flex-auto'>
           <Statistic title='微博数' value={weiboNum} className='ml4 ph4 pv3 ba' />
