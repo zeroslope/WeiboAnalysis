@@ -25,6 +25,7 @@ class KeywordForm extends Component {
         cancelText='取消'
         onCancel={onCancel}
         onOk={onCreate}
+        centered
       >
         <Form layout='vertical'>
           <Form.Item label='关键词'>
