@@ -6,7 +6,7 @@ const dialog = window.electron.remote.dialog
 
 const join = window.require('path').join
 
-const typeFilter = ['用户抓取', '综合抓取', '热门抓取', '实时抓取', '微博转发', '微博评论']
+const typeFilter = ['用户抓取', '综合抓取', '热门抓取', '实时抓取', '微博转发', '微博评论', '微信']
   .map(s => ({
     value: s,
     text: s
@@ -73,8 +73,8 @@ class Record extends Component {
       }
       const onClick = () => {
         let win = new BrowserWindow({
-          width: 800,
-          height: 600,
+          width: 1000,
+          height: 800,
           webPreferences: {
             preload: join(__dirname, '../../../main/preload.js')
           }
@@ -111,17 +111,20 @@ class Record extends Component {
 
   isExportExcelSuccessful (typeOriginal, type, name) {
     const filepath = dialog.showSaveDialog({
-      defaultPath: `${type}-${name}`,
+      defaultPath: `${type}-${name}.xlsx`,
       title: '导出',
       buttonLabel: '导出'
     })
     if (filepath) {
-      const res = this.exportExcel(typeOriginal, name)
+      console.log(filepath)
+      const res = this.exportExcel(typeOriginal, name, filepath)
       if (res) {
         message.success('导出成功', 1.5)
       } else {
         message.error('导出失败，请尝试F5刷新页面或者重新启动应用！')
       }
+    } else {
+      message.info('需要设置导出目录才能导出')
     }
   }
 

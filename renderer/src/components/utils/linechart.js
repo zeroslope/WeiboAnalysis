@@ -19,7 +19,7 @@ class LineChart extends Component {
         height={400}
         data={data}
         scale={this.cols}
-        padding={[20, 48, 96, 64]}
+        padding={[20, 96, 96, 64]}
         forceFit
       >
         <Axis name='item' />
