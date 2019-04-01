@@ -38,8 +38,16 @@ class LayoutComponent extends Component {
             <Menu.Item key='/'>
               <Link to='/'>
                 <div>
-                  <Icon type='cloud-download' />
-                  <span>数据爬取</span>
+                  <Icon type='weibo' />
+                  <span>微博数据爬取</span>
+                </div>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key='/wechat'>
+              <Link to='/wechat'>
+                <div>
+                  <Icon type='wechat' />
+                  <span>微信数据爬取</span>
                 </div>
               </Link>
             </Menu.Item>
