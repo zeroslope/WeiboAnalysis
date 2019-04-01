@@ -36,9 +36,11 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@antv/data-set": "^0.10.2",
     "@emotion/core": "^10.0.7",
     "antd": "^3.13.3",
     "app-root-path": "^2.1.0",
+    "bizcharts": "^3.5.1",
     "cross-env": "^5.2.0",
     "electron-is-dev": "^1.0.1",
     "react": "^16.8.2",

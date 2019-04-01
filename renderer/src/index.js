@@ -13,7 +13,7 @@ import rootReducer from './rootReducer'
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
 ReactDOM.render(
-  <HashRouter>
+  <HashRouter hashType='noslash'>
     <Provider store={store}>
       <App />
     </Provider>

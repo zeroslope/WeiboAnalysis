@@ -4,6 +4,9 @@ import { Route, Switch } from 'react-router-dom'
 import Home from './pages/home'
 import Record from './pages/record'
 import Setting from './pages/setting'
+import Weibo from './pages/weibo'
+import Comment from './pages/comment'
+import Repost from './pages/repost'
 
 export default () => {
   return (
@@ -11,6 +14,9 @@ export default () => {
       <Route exact path='/' component={Home} />
       <Route exact path='/record' component={Record} />
       <Route exact path='/setting' component={Setting} />
+      <Route exact path='/weibo/:type/:key' component={Weibo} />
+      <Route exact path='/comment/:key' component={Comment} />
+      <Route exact path='/repost/:key' component={Repost} />
       <Route component={() => <h1>204 No Content</h1>} />
     </Switch>
   )

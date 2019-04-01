@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Layout from '../components/Layout'
 import { Table, message } from 'antd'
+const BrowserWindow = window.electron.remote.BrowserWindow
+const join = window.require('path').join
 
 const typeFilter = ['用户抓取', '综合抓取', '热门抓取', '实时抓取', '微博转发', '微博评论']
   .map(s => ({
@@ -43,9 +45,62 @@ class Record extends Component {
     render: (text, record) => (
       <a href='javascript:;' onClick={() => this.isExportExcelSuccessful(record.typeOriginal, record.name)}>导出</a>
     )
+  }, {
+    title: '分析',
+    key: 'analyize',
+    align: 'center',
+    render: (text, record) => {
+      let pathname
+      console.log(record.typeOriginal)
+      switch (record.typeOriginal) {
+        case '-1':
+        case '1':
+        case '60':
+        case '61':
+          pathname = `/weibo/${record.typeOriginal}/${record.name}`
+          break
+        case '100':
+          pathname = `/repost/${record.name}`
+          break
+        case '101':
+          pathname = `/comment/${record.name}`
+          break
+        default:
+          pathname = '/'
+          break
+      }
+      const onClick = () => {
+        let win = new BrowserWindow({
+          width: 800,
+          height: 600,
+          webPreferences: {
+            preload: join(__dirname, '../../../main/preload.js')
+          }
+        })
+        win.on('close', () => { win = null })
+        console.log(window.isDev)
+        if (window.isDev) {
+          win.loadURL('http://localhost:1234#' + pathname)
+        } else {
+          // let url = window.require('url').format({
+          //   protocol: 'file',
+          //   pathname: window.require('path').join(__dirname, `../../../app/index.html`)
+          // })
+          // console.log(url)
+          win.loadFile('app/index.html', {
+            hash: pathname
+          })
+        }
+        win.show()
+      }
+      return (
+        <a onClick={onClick}>分析</a>
+      )
+    }
   }]
 
   componentDidMount () {
+    console.log(window.prodPath)
     if (this.getHistory) {
       let history = this.getHistory()
       // console.log(history)
