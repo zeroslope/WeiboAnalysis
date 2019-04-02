@@ -2,15 +2,18 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import WechatPublicForm from '../form/WechatPublicForm'
-import { addWechatPublic, delWechatPublic, setScrapy } from '../../actions/scrapy'
+import { addWechatPublic, delWechatPublic, delAllWechatPublic, setScrapy } from '../../actions/scrapy'
 import { Button, Table, Popconfirm, message } from 'antd'
 
-const TabelHeader = ({ add, start }) => (
+const TabelHeader = ({ add, start, deleteAll }) => (
   <div className='flex justify-between items-center'>
     <h3 className='ma0'>微信公众号信息获取</h3>
     <div>
       <Button type='primary' shape='circle' icon='plus' size='small' onClick={add} />
       <Button type='primary' shape='circle' icon='cloud-download' size='small' className='ml3' onClick={start} />
+      <Popconfirm title='是否要全部删除？' onConfirm={deleteAll}>
+        <Button type='primary' shape='circle' icon='delete' size='small' className='ml3' />
+      </Popconfirm>
     </div>
   </div>
 )
@@ -82,6 +85,7 @@ class WechatTab extends Component {
   }
 
   startScrapy = () => {
+    if (this.props.data.length === 0) return
     if (this.ipcRenderer) {
       this.props.setScrapy(1)
       this.setState({ loading: true })
@@ -119,9 +123,9 @@ class WechatTab extends Component {
         endDate: values.dateRange[1].format('YYYY-MM-DD'),
         stepLength: values.stepLength,
         key: values.key,
-        index: this.props.data.length
+        index: this.state.index
       }
-      console.log(newData)
+      // console.log(newData)
       this.props.submit(newData)
       this.setState((state, props) => ({
         visible: false,
@@ -131,7 +135,7 @@ class WechatTab extends Component {
   }
 
   handleDelete = (index) => {
-    console.log(index)
+    // console.log(index)
     this.props.delete(index)
   }
 
@@ -147,7 +151,7 @@ class WechatTab extends Component {
           columns={this.columns}
           dataSource={data}
           size='small'
-          title={() => <TabelHeader add={this.showModal} start={this.startScrapy} />}
+          title={() => <TabelHeader add={this.showModal} start={this.startScrapy} deleteAll={this.props.deleteAll} />}
           locale={{
             emptyText: '暂无数据'
           }}
@@ -172,4 +176,4 @@ const mapStateToProps = (state) => ({
   data: state.wechatPublic
 })
 
-export default connect(mapStateToProps, { submit: addWechatPublic, delete: delWechatPublic, setScrapy })(WechatTab)
+export default connect(mapStateToProps, { submit: addWechatPublic, delete: delWechatPublic, deleteAll: delAllWechatPublic, setScrapy })(WechatTab)

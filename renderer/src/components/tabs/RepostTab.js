@@ -2,15 +2,18 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import RepostForm from '../form/RepostForm'
 import { connect } from 'react-redux'
-import { addRepost, delRepost, setScrapy } from '../../actions/scrapy'
+import { addRepost, delRepost, delAllRepost, setScrapy } from '../../actions/scrapy'
 import { Button, Table, Popconfirm, message } from 'antd'
 
-const TabelHeader = ({ add, start }) => (
+const TabelHeader = ({ add, start, deleteAll }) => (
   <div className='flex justify-between items-center'>
     <h3 className='ma0'>用户转发信息获取</h3>
     <div>
       <Button type='primary' shape='circle' icon='plus' size='small' onClick={add} />
       <Button type='primary' shape='circle' icon='cloud-download' size='small' className='ml3' onClick={start} />
+      <Popconfirm title='是否要全部删除？' onConfirm={deleteAll}>
+        <Button type='primary' shape='circle' icon='delete' size='small' className='ml3' />
+      </Popconfirm>
     </div>
   </div>
 )
@@ -65,15 +68,6 @@ class KeywordTab extends Component {
     text: ''
   }
 
-  // componentDidMount () {
-  //   if (this.ipcRenderer) {
-  //     this.ipcRenderer.on('search-by-repost', (event, data) => {
-  //       console.log(data)
-  //       this.setState({ text: this.state.text + data })
-  //     })
-  //   }
-  // }
-
   componentWillUnmount () {
     if (this.ipcRenderer) {
       this.ipcRenderer.removeAllListeners('search-by-repost')
@@ -81,22 +75,25 @@ class KeywordTab extends Component {
   }
 
   startScrapy = () => {
-    this.props.setScrapy(1)
-    this.setState({ loading: true })
-    // console.log('on')
-    this.ipcRenderer.on('search-by-repost', (event, data) => {
+    if (this.props.data.length === 0) return
+    if (this.ipcRenderer) {
+      this.props.setScrapy(1)
+      this.setState({ loading: true })
+      // console.log('on')
+      this.ipcRenderer.on('search-by-repost', (event, data) => {
       // console.log(data)
-      if (!data.end) {
-        this.setState({ text: this.state.text + data.data })
-        this.textArea.scrollTop = this.textArea.scrollHeight
-      } else {
-        this.props.setScrapy(-1)
-        this.setState({ loading: false })
-        message.info('微博转发数据爬取完成')
-        this.ipcRenderer.removeAllListeners('search-by-repost')
-      }
-    })
-    this.ipcRenderer.send('search-by-repost', this.props.data)
+        if (!data.end) {
+          this.setState({ text: this.state.text + data.data })
+          this.textArea.scrollTop = this.textArea.scrollHeight
+        } else {
+          this.props.setScrapy(-1)
+          this.setState({ loading: false })
+          message.info('微博转发数据爬取完成')
+          this.ipcRenderer.removeAllListeners('search-by-repost')
+        }
+      })
+      this.ipcRenderer.send('search-by-repost', this.props.data)
+    }
   }
 
   showModal = () => this.setState({ visible: true })
@@ -112,8 +109,7 @@ class KeywordTab extends Component {
       form.resetFields()
       const newData = {
         ...values,
-        index: this.props.data.length
-
+        index: this.state.index
       }
       this.props.submit(newData)
       this.setState((state, props) => ({
@@ -140,7 +136,7 @@ class KeywordTab extends Component {
           columns={this.columns}
           dataSource={data}
           size='small'
-          title={() => <TabelHeader add={this.showModal} start={this.startScrapy} />}
+          title={() => <TabelHeader add={this.showModal} start={this.startScrapy} deleteAll={this.props.deleteAll} />}
           locale={{
             emptyText: '暂无数据'
           }}
@@ -165,4 +161,4 @@ const mapStateToProps = (state) => ({
   data: state.repost
 })
 
-export default connect(mapStateToProps, { submit: addRepost, delete: delRepost, setScrapy })(KeywordTab)
+export default connect(mapStateToProps, { submit: addRepost, delete: delRepost, deleteAll: delAllRepost, setScrapy })(KeywordTab)

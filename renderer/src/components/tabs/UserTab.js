@@ -2,15 +2,18 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import UserForm from '../form/UserForm'
-import { addUser, delUser, setScrapy } from '../../actions/scrapy'
+import { addUser, delUser, delAllUser, setScrapy } from '../../actions/scrapy'
 import { Button, Table, Popconfirm, message } from 'antd'
 
-const TabelHeader = ({ add, start }) => (
+const TabelHeader = ({ add, start, deleteAll }) => (
   <div className='flex justify-between items-center'>
     <h3 className='ma0'>基于用户ID搜索</h3>
     <div>
       <Button type='primary' shape='circle' icon='plus' size='small' onClick={add} />
       <Button type='primary' shape='circle' icon='cloud-download' size='small' className='ml3' onClick={start} />
+      <Popconfirm title='是否要全部删除？' onConfirm={deleteAll}>
+        <Button type='primary' shape='circle' icon='delete' size='small' className='ml3' />
+      </Popconfirm>
     </div>
   </div>
 )
@@ -71,16 +74,6 @@ class UserTab extends Component {
     text: ``
   };
 
-  // componentDidMount () {
-  //   if (this.ipcRenderer) {
-  //     // console.log('on')
-  //     this.ipcRenderer.on('search-by-user', (event, data) => {
-  //       console.log(data)
-  //       this.setState({ text: this.state.text + data })
-  //     })
-  //   }
-  // }
-
   componentWillUnmount () {
     if (this.ipcRenderer) {
       this.ipcRenderer.removeAllListeners('search-by-user')
@@ -88,12 +81,13 @@ class UserTab extends Component {
   }
 
   startScrapy = () => {
+    if (this.props.data.length === 0) return
     if (this.ipcRenderer) {
       this.props.setScrapy(1)
       this.setState({ loading: true })
       // console.log('on')
       this.ipcRenderer.on('search-by-user', (event, data) => {
-        console.log(data)
+        // console.log(data)
         if (!data.end) {
           this.setState({ text: this.state.text + data.data })
           this.textArea.scrollTop = this.textArea.scrollHeight
@@ -121,7 +115,7 @@ class UserTab extends Component {
       form.resetFields()
       const newData = {
         ...values,
-        index: this.props.data.length
+        index: this.state.index
 
       }
       this.props.submit(newData)
@@ -133,7 +127,7 @@ class UserTab extends Component {
   }
 
   handleDelete = (index) => {
-    console.log(index)
+    // console.log(index)
     this.props.delete(index)
   }
 
@@ -149,7 +143,7 @@ class UserTab extends Component {
           columns={this.columns}
           dataSource={data}
           size='small'
-          title={() => <TabelHeader add={this.showModal} start={this.startScrapy} />}
+          title={() => <TabelHeader add={this.showModal} start={this.startScrapy} deleteAll={this.props.deleteAll} />}
           locale={{
             emptyText: '暂无数据'
           }}
@@ -174,4 +168,4 @@ const mapStateToProps = (state) => ({
   data: state.user
 })
 
-export default connect(mapStateToProps, { submit: addUser, delete: delUser, setScrapy })(UserTab)
+export default connect(mapStateToProps, { submit: addUser, delete: delUser, deleteAll: delAllUser, setScrapy })(UserTab)

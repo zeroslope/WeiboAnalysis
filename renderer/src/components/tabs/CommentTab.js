@@ -2,15 +2,18 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import RepostForm from '../form/RepostForm'
-import { addComment, delComment, setScrapy } from '../../actions/scrapy'
+import { addComment, delComment, setScrapy, delAllComment } from '../../actions/scrapy'
 import { Button, Table, Popconfirm, message } from 'antd'
 
-const TabelHeader = ({ add, start }) => (
+const TabelHeader = ({ add, start, deleteAll }) => (
   <div className='flex justify-between items-center'>
     <h3 className='ma0'>用户评论信息获取</h3>
     <div>
       <Button type='primary' shape='circle' icon='plus' size='small' onClick={add} />
       <Button type='primary' shape='circle' icon='cloud-download' size='small' className='ml3' onClick={start} />
+      <Popconfirm title='是否要全部删除？' onConfirm={deleteAll}>
+        <Button type='primary' shape='circle' icon='delete' size='small' className='ml3' />
+      </Popconfirm>
     </div>
   </div>
 )
@@ -65,16 +68,6 @@ class CommentTab extends Component {
     text: ''
   }
 
-  // componentDidMount () {
-  //   if (this.ipcRenderer) {
-  //     console.log('on')
-  //     this.ipcRenderer.on('search-by-comment', (event, data) => {
-  //       console.log(data)
-  //       this.setState({ text: this.state.text + data })
-  //     })
-  //   }
-  // }
-
   componentWillUnmount () {
     if (this.ipcRenderer) {
       this.ipcRenderer.removeAllListeners('search-by-comment')
@@ -82,6 +75,7 @@ class CommentTab extends Component {
   }
 
   startScrapy = () => {
+    if (this.props.data.length === 0) return
     if (this.ipcRenderer) {
       this.props.setScrapy(1)
       this.setState({ loading: true })
@@ -115,8 +109,7 @@ class CommentTab extends Component {
       form.resetFields()
       const newData = {
         ...values,
-        index: this.props.data.length
-
+        index: this.state.index
       }
       this.props.submit(newData)
       this.setState((state, props) => ({
@@ -143,7 +136,7 @@ class CommentTab extends Component {
           columns={this.columns}
           dataSource={data}
           size='small'
-          title={() => <TabelHeader add={this.showModal} start={this.startScrapy} />}
+          title={() => <TabelHeader add={this.showModal} start={this.startScrapy} deleteAll={this.props.deleteAll} />}
           locale={{
             emptyText: '暂无数据'
           }}
@@ -168,4 +161,4 @@ const mapStateToProps = (state) => ({
   data: state.comment
 })
 
-export default connect(mapStateToProps, { submit: addComment, delete: delComment, setScrapy })(CommentTab)
+export default connect(mapStateToProps, { submit: addComment, delete: delComment, deleteAll: delAllComment, setScrapy })(CommentTab)
