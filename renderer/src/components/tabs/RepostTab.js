@@ -83,7 +83,8 @@ class KeywordTab extends Component {
       this.ipcRenderer.on('search-by-repost', (event, data) => {
       // console.log(data)
         if (!data.end) {
-          this.setState({ text: this.state.text + data.data })
+          let text = this.state.text + data.data
+          this.setState({ text: text.slice(-10000) })
           this.textArea.scrollTop = this.textArea.scrollHeight
         } else {
           this.props.setScrapy(-1)
