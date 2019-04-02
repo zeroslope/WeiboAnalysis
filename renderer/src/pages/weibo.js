@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Statistic } from 'antd'
-import { Link } from 'react-router-dom'
 import WordCloud from '../components/utils/wordcloud'
 import Pie from '../components/utils/pie'
 import LineChart from '../components/utils/linechart'
