@@ -37,4 +37,16 @@ const getHistory = () => {
   }
 }
 
-module.exports = getHistory
+const delHistory = (type, name) => {
+  const cmd = `cd /Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy && /Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python /Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/history_record.py del ${type} ${name}`
+  try {
+    execSync(cmd)
+  } catch (err) {
+    throw err
+  }
+}
+
+module.exports = {
+  getHistory,
+  delHistory
+}

@@ -13,7 +13,8 @@ const typeFilter = ['用户抓取', '综合抓取', '热门抓取', '实时抓�
   }))
 
 class Record extends Component {
-  getHistory = window.electron.remote.require('./getHistory') || false
+  getHistory = window.electron.remote.require('./getHistory').getHistory || false
+  delHistory = window.electron.remote.require('./getHistory').delHistory || false
   exportExcel = window.electron.remote.require('./exportExcel') || false
 
   state = {
@@ -45,7 +46,11 @@ class Record extends Component {
     key: 'action',
     align: 'center',
     render: (text, record) => (
-      <a href='javascript:;' onClick={() => this.isExportExcelSuccessful(record.typeOriginal, record.type, record.name)}>导出</a>
+      <div>
+        <a href='javascript:;' onClick={() => this.isExportExcelSuccessful(record.typeOriginal, record.type, record.name)}>导出 </a>
+        /
+        <a href='javascript:;' onClick={() => this.isDeleteExcelSuccessful(record.typeOriginal, record.type, record.name)}> 删除</a>
+      </div>
     )
   }, {
     title: '分析',
@@ -67,6 +72,8 @@ class Record extends Component {
         case '101':
           pathname = `/comment/${record.name}`
           break
+        case '200':
+          return null
         default:
           pathname = '/'
           break
@@ -125,6 +132,21 @@ class Record extends Component {
       }
     } else {
       message.info('需要设置导出目录才能导出')
+    }
+  }
+
+  isDeleteExcelSuccessful (typeOriginal, type, name) {
+    try {
+      this.delHistory(typeOriginal, name)
+      message.success('导出成功', 1.5)
+      if (this.getHistory) {
+        let history = this.getHistory()
+        // console.log(history)
+        this.setState({ history })
+      }
+    } catch (err) {
+      message.error('导出失败，请尝试F5刷新页面或者重新启动应用！')
+      throw err
     }
   }
 
