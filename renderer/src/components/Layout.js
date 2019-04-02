@@ -35,7 +35,7 @@ class LayoutComponent extends Component {
           disabled={isScrapying > 0}
         >
           <Menu theme='dark' defaultSelectedKeys={[match.path]} mode='inline'>
-            <Menu.Item key='/'>
+            <Menu.Item key='/' disabled={isScrapying}>
               <Link to='/'>
                 <div>
                   <Icon type='weibo' />
@@ -43,7 +43,7 @@ class LayoutComponent extends Component {
                 </div>
               </Link>
             </Menu.Item>
-            <Menu.Item key='/wechat'>
+            <Menu.Item key='/wechat' disabled={isScrapying}>
               <Link to='/wechat'>
                 <div>
                   <Icon type='wechat' />
