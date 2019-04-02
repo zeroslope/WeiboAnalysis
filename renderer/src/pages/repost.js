@@ -1,33 +1,9 @@
 import React, { Component } from 'react'
 import { Statistic, Skeleton } from 'antd'
-import WordCloud from '../components/utils/wordcloud'
-import Pie from '../components/utils/pie'
-import LineChart from '../components/utils/linechart'
-
-const userMapper = {
-  '-1': '普通用户',
-  '0': '名人',
-  '1': '政府',
-  '2': '企业',
-  '3': '媒体',
-  '4': '校园',
-  '5': '网站',
-  '6': '应用',
-  '7': '团体(机构)',
-  '8': '待审企业',
-  '200': '初级达人',
-  '220': '中高级达人',
-  '400': '已故V用户'
-}
-
-const typeMapper = {
-  '-1': '用户抓取',
-  '1': '综合抓取',
-  '60': '热门抓取',
-  '61': '实时抓取',
-  '100': '微博转发',
-  '101': '微博评论'
-}
+import WordCloud from '../components/chart/wordcloud'
+import Pie from '../components/chart/pie'
+import LineChart from '../components/chart/linechart'
+import { typeMapper, userMapper } from '../components/utils'
 
 export class repost extends Component {
   getWeibo = window.electron.remote.require('./getAnalyize').getWeibo || false;
