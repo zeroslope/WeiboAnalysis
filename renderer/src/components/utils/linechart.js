@@ -38,11 +38,11 @@ class LineChart extends Component {
         <Geom
           type='point'
           position='item*value'
-          size={2}
+          size={1}
           shape={'circle'}
           style={{
             stroke: '#eee',
-            lineWidth: 1
+            lineWidth: 0.5
           }}
         />
       </Chart>

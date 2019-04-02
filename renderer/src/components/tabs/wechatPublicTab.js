@@ -91,7 +91,7 @@ class WechatTab extends Component {
       this.setState({ loading: true })
       // console.log('on')
       this.ipcRenderer.on('search-by-wechat', (event, data) => {
-        console.log(data)
+        // console.log(data)
         if (!data.end) {
           let text = this.state.text + data.data
           this.setState({ text: text.slice(-10000) })

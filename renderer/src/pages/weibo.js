@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Statistic } from 'antd'
+import { Statistic, Skeleton } from 'antd'
 import WordCloud from '../components/utils/wordcloud'
 import Pie from '../components/utils/pie'
 import LineChart from '../components/utils/linechart'
@@ -37,68 +37,66 @@ export class weibo extends Component {
     verifyType: [],
     followers: 0,
     keyCloud: [],
-    timeline: []
+    timeline: [],
+    loading: true
   }
 
   componentWillMount () {
-    // console.log(this.props.match)
-    //  console.log(this.props.location)
     if (this.getWeibo) {
       const { key, type } = this.props.match.params
-      // console.log(type, key)
-      const P = new Promise((resolve, reject) => {
-        resolve(this.getWeibo(type, key))
-      }).then((data) => {
-        // console.log(data)
-        const weiboNum = data.weibo_num
-        const followers = data.followers
-        const timeline = data.timeline
-          ? Object.keys(data.timeline).map(time => ({
-            item: time,
-            value: data.timeline[time]
-          }))
-          : []
-        const verifyType = data.verify_type
-          ? Object.keys(data.verify_type).map(type => ({
-            item: userMapper[type],
-            count: data.verify_type[type]
-          }))
-          : []
-        const keyCloud = data.key
-          ? Object.keys(data.key).map(x => ({
-            x,
-            value: data.key[x]
-          }))
-          : []
-        this.setState({ weiboNum, timeline, followers, verifyType, keyCloud })
-      })
+      this.getWeibo(type, key)
+        .then((data) => {
+          const weiboNum = data.weibo_num
+          const followers = data.followers
+          const timeline = data.timeline
+            ? Object.keys(data.timeline).map(time => ({
+              item: time,
+              value: data.timeline[time]
+            }))
+            : []
+          const verifyType = data.verify_type
+            ? Object.keys(data.verify_type).map(type => ({
+              item: userMapper[type],
+              count: data.verify_type[type]
+            }))
+            : []
+          const keyCloud = data.key
+            ? Object.keys(data.key).map(x => ({
+              x,
+              value: data.key[x]
+            }))
+            : []
+          this.setState({ weiboNum, timeline, followers, verifyType, keyCloud, loading: false })
+        })
     }
   }
 
   render () {
     const { key, type } = this.props.match.params
-    const { weiboNum, timeline, followers, verifyType, keyCloud } = this.state
+    const { weiboNum, timeline, followers, verifyType, keyCloud, loading } = this.state
     return (
       <div className='pa2 vh-100'>
         <h1 className='ml4 mt0'>{`${typeMapper[type]}: ${key}`}</h1>
-        <div className='flex flex-auto'>
-          <Statistic title='微博数' value={weiboNum} className='ml4 ph4 pv3 ba' />
-          <Statistic title='粉丝数' value={followers} className='ml5 ph4 pv3 ba' />
-        </div>
-        <div className='mt3'>
-          <div className='dib w-50'>
-            <h3 className='tc'>微博发布时间分布</h3>
-            <LineChart data={timeline} />
+        <Skeleton active loading={loading} title={false} paragraph={{ rows: 5 }}>
+          <div className='flex flex-auto'>
+            <Statistic title='微博数' value={weiboNum} className='ml4 ph4 pv3 ba' />
+            <Statistic title='粉丝数' value={followers} className='ml5 ph4 pv3 ba' />
           </div>
-          <div className='dib w-50'>
-            <h3 className='tc'>微博用户粉丝人群分布</h3>
-            { verifyType.length > 0 && <Pie data={verifyType} /> }
+          <div className='mt3'>
+            <div className='dib w-50'>
+              <h3 className='tc'>微博发布时间分布</h3>
+              <LineChart data={timeline} />
+            </div>
+            <div className='dib w-50'>
+              <h3 className='tc'>微博用户粉丝人群分布</h3>
+              { verifyType.length > 0 && <Pie data={verifyType} /> }
+            </div>
           </div>
-        </div>
-        <div className='mt3'>
-          <h3 className='tc'>关键词词云</h3>
-          { keyCloud.length > 0 && <WordCloud data={keyCloud} /> }
-        </div>
+          <div className='mt3'>
+            <h3 className='tc'>关键词词云</h3>
+            { keyCloud.length > 0 && <WordCloud data={keyCloud} /> }
+          </div>
+        </Skeleton>
       </div>
     )
   }
