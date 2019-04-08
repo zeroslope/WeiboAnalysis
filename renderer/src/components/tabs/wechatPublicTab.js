@@ -99,7 +99,7 @@ class WechatTab extends Component {
         } else {
           this.props.setScrapy(-1)
           this.setState({ loading: false })
-          message.info('微信公众号信息获取')
+          message.info('微信公众号信息获取完成')
           this.ipcRenderer.removeAllListeners('search-by-wechat')
         }
       })

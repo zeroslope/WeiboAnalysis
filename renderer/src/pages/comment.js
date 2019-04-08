@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Statistic, Skeleton } from 'antd'
 import WordCloud from '../components/chart/wordcloud'
 import Pie from '../components/chart/pie'
-import LineChart from '../components/chart/linechart'
+import getComponent from '../components/chart/linechart'
 import { typeMapper, userMapper } from '../components/utils'
 
 export class weibo extends Component {
@@ -18,11 +18,8 @@ export class weibo extends Component {
   }
 
   componentWillMount () {
-    // console.log(this.props.match)
-    //  console.log(this.props.location)
     if (this.getWeibo) {
       const { key } = this.props.match.params
-      // console.log(101, key)
       this.getWeibo(101, key)
         .then(data => {
           // console.log(data)
@@ -55,6 +52,7 @@ export class weibo extends Component {
     const { key } = this.props.match.params
     const type = 101
     const { commentNum, timeline, likeCounts, verifyType, keyCloud, loading } = this.state
+    const SliderChart = getComponent(timeline)
     return (
       <div className='pa2'>
         <h1 className='ml4 mt0'>{`${typeMapper[type]}: ${key}`}</h1>
@@ -66,7 +64,7 @@ export class weibo extends Component {
           <div className='mt3'>
             <div className='dib w-50'>
               <h3 className='tc'>评论时间分布</h3>
-              <LineChart data={timeline} />
+              <SliderChart />
             </div>
             <div className='dib w-50'>
               <h3 className='tc'>评论用户群体分布</h3>

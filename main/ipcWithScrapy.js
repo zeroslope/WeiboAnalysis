@@ -5,7 +5,6 @@ const channels = ['search-by-keyword', 'search-by-user', 'search-by-repost', 'se
 
 const addListener = () => {
   ipcMain.on('search-by-keyword', (event, args) => {
-    console.log(args)
     let r = args
       .map(arg => {
         const { keyword, searchOption, pageNumber, isNeedImage } = arg
@@ -18,20 +17,20 @@ const addListener = () => {
     })
     // child.on('error', console.error)
     child.stdout.on('data', (data) => {
-      console.log('data', data.toString())
+      // console.log('data', data.toString())
       event.sender.send('search-by-keyword', {
         end: false,
         data: data.toString()
       })
     })
     child.stdout.on('end', () => {
-      console.log('END! ', r)
+      // console.log('END! ', r)
       event.sender.send('search-by-keyword', {
         end: true
       })
     })
     child.stderr.on('data', (data) => {
-      console.log('error', data.toString())
+      // console.log('error', data.toString())
       event.sender.send('search-by-keyword', {
         end: false,
         data: data.toString()
@@ -52,20 +51,20 @@ const addListener = () => {
     })
     // child.on('error', console.error)
     child.stdout.on('data', (data) => {
-      console.log('data', data.toString())
+      // console.log('data', data.toString())
       event.sender.send('search-by-user', {
         end: false,
         data: data.toString()
       })
     })
     child.stdout.on('end', () => {
-      console.log('END! ', r)
+      // console.log('END! ', r)
       event.sender.send('search-by-user', {
         end: true
       })
     })
     child.stderr.on('data', (data) => {
-      console.log('error', data.toString())
+      // console.log('error', data.toString())
       event.sender.send('search-by-user', {
         end: false,
         data: data.toString()
@@ -86,20 +85,20 @@ const addListener = () => {
     })
     // child.on('error', console.error)
     child.stdout.on('data', (data) => {
-      console.log('data', data.toString())
+      // console.log('data', data.toString())
       event.sender.send('search-by-repost', {
         end: false,
         data: data.toString()
       })
     })
     child.stdout.on('end', () => {
-      console.log('END! ', r)
+      // console.log('END! ', r)
       event.sender.send('search-by-repost', {
         end: true
       })
     })
     child.stderr.on('data', (data) => {
-      console.log('error', data.toString())
+      // console.log('error', data.toString())
       event.sender.send('search-by-repost', {
         end: false,
         data: data.toString()
@@ -120,20 +119,20 @@ const addListener = () => {
     })
     // child.on('error', console.error)
     child.stdout.on('data', (data) => {
-      console.log('data', data.toString())
+      // console.log('data', data.toString())
       event.sender.send('search-by-comment', {
         end: false,
         data: data.toString()
       })
     })
     child.stdout.on('end', () => {
-      console.log('END! ', r)
+      // console.log('END! ', r)
       event.sender.send('search-by-comment', {
         end: true
       })
     })
     child.stderr.on('data', (data) => {
-      console.log('error', data.toString())
+      // console.log('error', data.toString())
       event.sender.send('search-by-comment', {
         end: false,
         data: data.toString()
@@ -154,20 +153,20 @@ const addListener = () => {
     })
     // child.on('error', console.error)
     child.stdout.on('data', (data) => {
-      console.log('data', data.toString())
+      // console.log('data', data.toString())
       event.sender.send('search-by-wechat', {
         end: false,
         data: data.toString()
       })
     })
     child.stdout.on('end', () => {
-      console.log('END! ', r)
+      // console.log('END! ', r)
       event.sender.send('search-by-wechat', {
         end: true
       })
     })
     child.stderr.on('data', (data) => {
-      console.log('error', data.toString())
+      // console.log('error', data.toString())
       event.sender.send('search-by-wechat', {
         end: false,
         data: data.toString()
@@ -178,7 +177,7 @@ const addListener = () => {
 
 const deleteListener = () => {
   for (const channel of channels) {
-    console.log(channel)
+    // console.log(channel)
     ipcMain.removeAllListeners(channel)
   }
 }

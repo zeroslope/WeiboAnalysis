@@ -53,7 +53,7 @@ class WechatPublicForm extends Component {
             {getFieldDecorator('key', {
               rules: [{ required: true, message: '请输入新榜提供的key' }]
             })(
-              <Input size='small' className='db w-10' name='key' />
+              <Input size='small' className='db w-40' name='key' />
             )}
           </Form.Item>
         </Form>

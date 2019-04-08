@@ -74,6 +74,11 @@
     topojson-client "~3.0.0"
     wolfy87-eventemitter "~5.1.0"
 
+"@antv/g2-plugin-slider@2.1.0":
+  version "2.1.0"
+  resolved "http://r.cnpmjs.org/@antv/g2-plugin-slider/download/@antv/g2-plugin-slider-2.1.0.tgz#7f2f5879d33dcfb14dd2b955092ca198ad9152b9"
+  integrity sha1-fy9YedM9z7FN0rlVCSyhmK2RUrk=
+
 "@antv/g2@3.5.1":
   version "3.5.1"
   resolved "http://r.cnpmjs.org/@antv/g2/download/@antv/g2-3.5.1.tgz#9b4e33c8322dde281c6581e05615c1710c1fc528"
@@ -1718,6 +1723,13 @@ bindings@~1.2.1:
   version "1.2.1"
   resolved "http://r.cnpmjs.org/bindings/download/bindings-1.2.1.tgz#14ad6113812d2d37d72e67b4cacb4bb726505f11"
   integrity sha1-FK1hE4EtLTfXLme0ystLtyZQXxE=
+
+bizcharts-plugin-slider@^2.1.1-beta.1:
+  version "2.1.1-beta.1"
+  resolved "http://r.cnpmjs.org/bizcharts-plugin-slider/download/bizcharts-plugin-slider-2.1.1-beta.1.tgz#e09a1cbee28cff897b1984a18add2a6d171c6fda"
+  integrity sha1-4JocvuKM/4l7GYShit0qbRccb9o=
+  dependencies:
+    "@antv/g2-plugin-slider" "2.1.0"
 
 bizcharts@^3.5.1:
   version "3.5.1"

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Statistic, Skeleton } from 'antd'
 import WordCloud from '../components/chart/wordcloud'
 import Pie from '../components/chart/pie'
-import LineChart from '../components/chart/linechart'
+import getComponent from '../components/chart/linechart'
 import { typeMapper, userMapper } from '../components/utils'
 
 export class repost extends Component {
@@ -24,7 +24,7 @@ export class repost extends Component {
       // console.log(100, key)
       this.getWeibo(100, key)
         .then(data => {
-          console.log(data)
+          // console.log(data)
           const repostNum = data.repost_num
           const followers = data.followers_count
           const timeline = data.timeline
@@ -64,6 +64,7 @@ export class repost extends Component {
     const { key } = this.props.match.params
     const type = 100
     const { repostNum, timeline, followers, verifyType, keyCloud, gender, loading } = this.state
+    const SliderChart = getComponent(timeline)
     return (
       <div className='pa2'>
         <h1 className='ml4 mt0'>{`${typeMapper[type]}: ${key}`}</h1>
@@ -75,7 +76,7 @@ export class repost extends Component {
           <div className='mt3'>
             <div className='dib w-50'>
               <h3 className='tc'>转发时间分布</h3>
-              <LineChart data={timeline} />
+              <SliderChart />
             </div>
             <div className='dib w-50'>
               <h3 className='tc'>转发人群认证类别分布</h3>

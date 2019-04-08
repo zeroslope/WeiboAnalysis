@@ -41,6 +41,7 @@
     "antd": "^3.13.3",
     "app-root-path": "^2.1.0",
     "bizcharts": "^3.5.1",
+    "bizcharts-plugin-slider": "^2.1.1-beta.1",
     "cross-env": "^5.2.0",
     "electron-is-dev": "^1.0.1",
     "react": "^16.8.2",

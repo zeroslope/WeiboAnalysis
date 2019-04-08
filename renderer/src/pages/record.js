@@ -123,7 +123,7 @@ class Record extends Component {
       buttonLabel: '导出'
     })
     if (filepath) {
-      console.log(filepath)
+      // console.log(filepath)
       const res = this.exportExcel(typeOriginal, name, filepath)
       if (res) {
         message.success('导出成功', 1.5)
