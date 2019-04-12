@@ -7,7 +7,7 @@ import { Button, Table, Popconfirm, message } from 'antd'
 
 const TabelHeader = ({ add, start, deleteAll }) => (
   <div className='flex justify-between items-center'>
-    <h3 className='ma0'>基于用户ID搜索</h3>
+    <h3 className='ma0'>用户ID</h3>
     <div>
       <Button type='primary' shape='circle' icon='plus' size='small' onClick={add} />
       <Button type='primary' shape='circle' icon='cloud-download' size='small' className='ml3' onClick={start} />

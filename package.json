@@ -17,7 +17,7 @@
   },
   "build": {
     "appId": "io.zeroslope.weibo",
-    "productName": "weibo-analyize",
+    "productName": "群力数据系统",
     "copyright": "Copyright © 2019 zeroslope",
     "directories": {
       "output": "dist",

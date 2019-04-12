@@ -20,18 +20,18 @@ class Index extends Component {
   render () {
     return (
       <Layout match={this.props.match}>
-        <h2 className='silver ml3 mt3'>微博数据爬取</h2>
+        <h2 className='silver ml3 mt3'>微博数据</h2>
         <Tabs tabPosition='top' className='relative overflow-hidden ph3 pb3 pt2'>
-          <TabPane tab='基于用户ID搜索' key='1'>
+          <TabPane tab='用户ID' key='1'>
             <UserTab />
           </TabPane>
-          <TabPane tab='基于关键词搜索' key='2'>
+          <TabPane tab='关键词' key='2'>
             <KeywordTab />
           </TabPane>
-          <TabPane tab='用户转发信息获取' key='3'>
+          <TabPane tab='转发信息' key='3'>
             <RepostTab />
           </TabPane>
-          <TabPane tab='用户评论信息获取' key='4'>
+          <TabPane tab='评论信息' key='4'>
             <CommentTab />
           </TabPane>
         </Tabs>

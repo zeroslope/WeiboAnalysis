@@ -18,7 +18,7 @@ class RepostForm extends Component {
     return (
       <Modal
         visible={visible}
-        title='用户转发信息获取'
+        title='转发信息'
         okText='保存'
         cancelText='取消'
         onCancel={onCancel}

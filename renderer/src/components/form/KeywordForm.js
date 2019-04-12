@@ -20,7 +20,7 @@ class KeywordForm extends Component {
     return (
       <Modal
         visible={visible}
-        title='基于关键词搜索'
+        title='关键词'
         okText='保存'
         cancelText='取消'
         onCancel={onCancel}

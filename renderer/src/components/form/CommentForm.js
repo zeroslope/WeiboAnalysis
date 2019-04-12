@@ -18,7 +18,7 @@ class CommentForm extends Component {
     return (
       <Modal
         visible={visible}
-        title='用户评论信息获取'
+        title='评论信息'
         okText='保存'
         cancelText='取消'
         onCancel={onCancel}

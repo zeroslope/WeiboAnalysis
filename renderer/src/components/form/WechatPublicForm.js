@@ -20,7 +20,7 @@ class WechatPublicForm extends Component {
     return (
       <Modal
         visible={visible}
-        title='微信公众号信息获取'
+        title='微信公众号'
         okText='保存'
         cancelText='取消'
         onCancel={onCancel}

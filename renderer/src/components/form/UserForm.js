@@ -18,7 +18,7 @@ class UserForm extends Component {
     return (
       <Modal
         visible={visible}
-        title='基于用户ID搜索'
+        title='用户ID'
         okText='保存'
         cancelText='取消'
         onCancel={onCancel}

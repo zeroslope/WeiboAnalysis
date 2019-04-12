@@ -39,7 +39,7 @@ class LayoutComponent extends Component {
               <Link to='/'>
                 <div>
                   <Icon type='weibo' />
-                  <span>微博数据爬取</span>
+                  <span>微博</span>
                 </div>
               </Link>
             </Menu.Item>
@@ -47,7 +47,7 @@ class LayoutComponent extends Component {
               <Link to='/wechat'>
                 <div>
                   <Icon type='wechat' />
-                  <span>微信数据爬取</span>
+                  <span>微信</span>
                 </div>
               </Link>
             </Menu.Item>
