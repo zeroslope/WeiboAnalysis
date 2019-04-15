@@ -11,7 +11,7 @@ const { exec } = require('child_process')
 
 const getWeibo = (type, key) => {
   // console.log(type, key)
-  const cmd = `cd /Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy && /Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python /Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/analysis.py ${type} ${key}`
+  const cmd = `cd ../weibo_scrapy && python analysis.py ${type} ${key}`
   try {
     return new Promise((resolve, reject) => {
       exec(cmd, (err, stdout, stderr) => {

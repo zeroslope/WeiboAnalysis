@@ -11,7 +11,7 @@ const typeMapper = {
 }
 
 const getHistory = () => {
-  const cmd = `cd /Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy && /Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python /Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/history_record.py get`
+  const cmd = `cd ../weibo_scrapy && python history_record.py get`
   try {
     const stdout = execSync(cmd)
     const data = JSON.parse(stdout.toString())
@@ -38,7 +38,7 @@ const getHistory = () => {
 }
 
 const delHistory = (type, name) => {
-  const cmd = `cd /Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy && /Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python /Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/history_record.py del ${type} ${name}`
+  const cmd = `cd ../weibo_scrapy && python history_record.py del ${type} ${name}`
   try {
     execSync(cmd)
   } catch (err) {

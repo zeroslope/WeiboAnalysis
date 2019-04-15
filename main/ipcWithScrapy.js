@@ -1,5 +1,6 @@
 const { ipcMain } = require('electron')
 const { spawn } = require('child_process')
+const { join } = require('path')
 
 const channels = ['search-by-keyword', 'search-by-user', 'search-by-repost', 'search-by-comment']
 
@@ -12,8 +13,8 @@ const addListener = () => {
       })
       .join('@_@')
     // console.log(r)
-    let child = spawn('/Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python', ['/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/entrypoint.py', 'weibo', r], {
-      cwd: '/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy'
+    let child = spawn('python', ['entrypoint.py', 'weibo', r], {
+      cwd: join(__dirname, '../weibo_scrapy')
     })
     // child.on('error', console.error)
     child.stdout.on('data', (data) => {
@@ -46,8 +47,8 @@ const addListener = () => {
       })
       .join('@_@')
     // console.log(r)
-    let child = spawn('/Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python', ['/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/entrypoint.py', 'weibo', r], {
-      cwd: '/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy'
+    let child = spawn('python', ['entrypoint.py', 'weibo', r], {
+      cwd: join(__dirname, '../weibo_scrapy')
     })
     // child.on('error', console.error)
     child.stdout.on('data', (data) => {
@@ -80,8 +81,8 @@ const addListener = () => {
       })
       .join('@_@')
     // console.log(r)
-    let child = spawn('/Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python', ['/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/entrypoint.py', 'repost', r], {
-      cwd: '/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy'
+    let child = spawn('python', ['entrypoint.py', 'repost', r], {
+      cwd: join(__dirname, '../weibo_scrapy')
     })
     // child.on('error', console.error)
     child.stdout.on('data', (data) => {
@@ -114,8 +115,8 @@ const addListener = () => {
       })
       .join('@_@')
     // console.log(r)
-    let child = spawn('/Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python', ['/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/entrypoint.py', 'comment', r], {
-      cwd: '/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy'
+    let child = spawn('python', ['entrypoint.py', 'comment', r], {
+      cwd: join(__dirname, '../weibo_scrapy')
     })
     // child.on('error', console.error)
     child.stdout.on('data', (data) => {
@@ -148,8 +149,8 @@ const addListener = () => {
       })
       .join('@_@')
     // console.log(r)
-    let child = spawn('/Users/zeroslope/Documents/fullstack/WeiboAnalysis/venv/bin/python', ['/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy/wechat_public.py', r], {
-      cwd: '/Users/zeroslope/Documents/fullstack/WeiboAnalysis/weibo_scrapy'
+    let child = spawn('python', ['wechat_public.py', r], {
+      cwd: join(__dirname, '../weibo_scrapy')
     })
     // child.on('error', console.error)
     child.stdout.on('data', (data) => {
