@@ -1,38 +1,35 @@
-const { exec } = require('child_process')
-
-// const typeMapper = {
-//   '-1': '用户抓取',
-//   '1': '综合抓取',
-//   '60': '热门抓取',
-//   '61': '实时抓取',
-//   '100': '微博转发',
-//   '101': '微博评论'
-// }
+const { spawnSync } = require('child_process')
+const { join } = require('path')
 
 const getWeibo = (type, key) => {
-  // console.log(type, key)
-  const cmd = `cd ../weibo_scrapy && python analysis.py ${type} ${key}`
+  // const cmd = `cd ../weibo_scrapy && python analysis.py ${type} ${key}`
   try {
     return new Promise((resolve, reject) => {
-      exec(cmd, (err, stdout, stderr) => {
-        if (err) {
-          reject(err)
+      try {
+        const res = spawnSync('python', ['analysis.py', type, key], {
+          cwd: join(__dirname, '../weibo_scrapy')
+        })
+        if (res.error) {
+          reject(res.err)
         }
-        if (stderr) {
-          reject(stderr)
-        }
-        resolve(stdout)
-      })
+        resolve(res.stdout)
+      } catch (err) {
+        reject(err)
+      }
+      // exec(cmd, (err, stdout, stderr) => {
+      //   if (err) {
+      //     reject(err)
+      //   }
+      //   if (stderr) {
+      //     reject(stderr)
+      //   }
+      //   resolve(stdout)
+      // })
     })
       .then(stdout => JSON.parse(stdout.toString()))
       .catch(stderr => {
         throw stderr
       })
-    // const stdout = execSync(cmd)
-    // // console.log(stdout.toString())
-    // const data = JSON.parse(stdout.toString())
-    // // console.log(data)
-    // return data
   } catch (err) {
     console.log(err)
     throw err

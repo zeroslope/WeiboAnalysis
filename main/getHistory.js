@@ -1,4 +1,5 @@
-const { execSync } = require('child_process')
+const { spawnSync } = require('child_process')
+const { join } = require('path')
 
 const typeMapper = {
   '-1': '用户抓取',
@@ -11,16 +12,16 @@ const typeMapper = {
 }
 
 const getHistory = () => {
-  const cmd = `cd ../weibo_scrapy && python history_record.py get`
   try {
-    const stdout = execSync(cmd)
+    let spawnRes = spawnSync('python', ['history_record.py', 'get'], {
+      cwd: join(__dirname, '../weibo_scrapy')
+    })
+    const stdout = spawnRes.stdout
     const data = JSON.parse(stdout.toString())
     let index = 1
     let res = []
     for (const key of Object.keys(data)) {
-      // console.log(key)
       let items = data[key]
-      // console.log(items)
       res = res.concat(
         items.map(item => ({
           index: index++,
@@ -38,9 +39,11 @@ const getHistory = () => {
 }
 
 const delHistory = (type, name) => {
-  const cmd = `cd ../weibo_scrapy && python history_record.py del ${type} ${name}`
+  // const cmd = `cd ../weibo_scrapy && python history_record.py del ${type} ${name}`
   try {
-    execSync(cmd)
+    spawnSync('python', ['history_record.py', 'del', type, name], {
+      cwd: join(__dirname, '../weibo_scrapy')
+    })
   } catch (err) {
     throw err
   }

@@ -1,4 +1,4 @@
-const { exec } = require('child_process')
+const { spawnSync } = require('child_process')
 const { join } = require('path')
 const { format } = require('url')
 const { resolve } = require('app-root-path')
@@ -11,15 +11,13 @@ const ipcWithScrapy = require('./ipcWithScrapy')
 
 ipcMain.on('change-proxy', (event, arg) => {
   const { certificate, password } = arg
-  const cmd = `python modify_proxy.py ${certificate} ${password}`
-  let venv = join(process.cwd(), '../venv/bin/activate')
-  exec(`source ${venv} && cd ../weibo_scrapy && ${cmd}`, function (err, stdout, stderr) {
-    // console.log(stdout)
-    event.sender.send('search-by-user', stdout.length)
-    if (err) {
-      console.info('stderr : ' + stderr)
-    }
-  })
+  try {
+    spawnSync('python', ['modify_proxy.py', certificate, password], {
+      cwd: join(__dirname, '../weibo_scrapy')
+    })
+  } catch (err) {
+    throw err
+  }
 })
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -65,7 +63,8 @@ const createWindow = () => {
   mainWindow.loadURL(url)
 
   // Open the DevTools.
-  if (isDev) { mainWindow.webContents.openDevTools() }
+  // if (isDev) { mainWindow.webContents.openDevTools() }
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

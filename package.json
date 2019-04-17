@@ -23,7 +23,14 @@
       "output": "dist",
       "buildResources": "resources"
     },
-    "publish": null
+    "asar": false,
+    "publish": null,
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    }
   },
   "standard": {
     "parser": "babel-eslint",
