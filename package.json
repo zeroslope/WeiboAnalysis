@@ -11,7 +11,7 @@
     "clean": "rm -rf .cache/ app/ render/dist/ dist/",
     "start": "concurrently \"yarn render:start\" \"wait-on http://localhost:1234 && yarn electron:start\"",
     "testprod": "yarn render:build && cross-env NODE_ENV=production yarn electron:start",
-    "dist": "electron-builder --mac --x64",
+    "dist": "electron-builder --win --x64",
     "build": "yarn clean && yarn render:build && yarn dist",
     "postinstall": "electron-builder install-app-deps"
   },
