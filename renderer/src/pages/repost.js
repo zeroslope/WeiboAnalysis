@@ -69,40 +69,44 @@ export class repost extends Component {
       <div className='pa2'>
         <h1 className='mt0'>{`${typeMapper[type]}: ${key}`}</h1>
         <Skeleton active loading={loading} title={false} paragraph={{ rows: 5 }}>
-          <div className='flex flex-auto'>
-            <Statistic title='转发数' value={repostNum} className='ph4 pv3 shadow-2' />
-            <Statistic title='粉丝数' value={followers} className='ml5 ph4 pv3 shadow-2' />
-          </div>
-          <div className='mt3 flex flex-auto justify-between'>
-            <div className='db w-48'>
-              <Card
-                size='small'
-                title='转发时间分布'
-                className='shadow-2 h-100'
-              >
-                <SliderChart />
-              </Card>
+          <div className='flex flex-auto shadow-2'>
+            <div className='w-50 tc'>
+              <Statistic title='转发数' value={repostNum} className='ph4 pv3 center' valueStyle={{
+                color: '#1590FF'
+              }} />
             </div>
-            <div className='db w-48'>
-              <Card
-                size='small'
-                title='转发人群认证类别分布'
-                className='shadow-2 h-100'
-              >
-                { verifyType.length > 0 && <Pie data={verifyType} /> }
-              </Card>
+            <div className='w-50 tc'>
+              <Statistic title='粉丝数' value={followers} className='ph4 pv3 center' valueStyle={{
+                color: '#1590FF'
+              }} />
             </div>
           </div>
           <div className='mt3'>
-            <div className='db w-48'>
-              <Card
-                size='small'
-                title='转发人群性别分布'
-                className='shadow-2 h-100'
-              >
-                { gender.length > 0 && <Pie data={gender} /> }
-              </Card>
-            </div>
+            <Card
+              size='small'
+              title='转发时间分布'
+              className='shadow-2 h-100'
+            >
+              <SliderChart />
+            </Card>
+          </div>
+          <div className='mt3'>
+            <Card
+              size='small'
+              title='转发人群认证类别分布'
+              className='shadow-2 h-100'
+            >
+              { verifyType.length > 0 && <Pie data={verifyType} /> }
+            </Card>
+          </div>
+          <div className='mt3'>
+            <Card
+              size='small'
+              title='转发人群性别分布'
+              className='shadow-2 h-100'
+            >
+              { gender.length > 0 && <Pie data={gender} /> }
+            </Card>
           </div>
           <div className='mt3'>
             <Card

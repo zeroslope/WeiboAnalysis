@@ -55,24 +55,31 @@ export class weibo extends Component {
       <div className='pa2 vh-100'>
         <h1 className='mt0'>{`${typeMapper[type]}: ${key}`}</h1>
         <Skeleton active loading={loading} title={false} paragraph={{ rows: 5 }}>
-          <div className='flex flex-auto'>
-            <Statistic title='微博数' value={weiboNum} className='ph4 pv3 shadow-2' />
-            <Statistic title='粉丝数' value={followers} className='ml5 ph4 pv3 shadow-2' />
-          </div>
-          <div className='mt3 flex flex-auto justify-between'>
-            <div className={`db ${type !== '-1' ? 'w-48' : 'w-100'}`}>
-              <Card
-                size='small'
-                title='微博发布频率'
-                className='shadow-2 h-100'
-              >
-                <SliderChart />
-              </Card>
-              {/* <h3 className='tc'>微博发布频率</h3> */ }
+          <div className='flex flex-auto shadow-2'>
+            <div className='w-50 tc'>
+              <Statistic title='微博数' value={weiboNum} className='ph4 pv3 center' valueStyle={{
+                color: '#1590FF'
+              }} />
             </div>
-            {
-              type !== '-1' &&
-              <div className='db w-48'>
+            <div className='w-50 tc'>
+              <Statistic title='粉丝数' value={followers} className='ph4 pv3 center' valueStyle={{
+                color: '#1590FF'
+              }} />
+            </div>
+          </div>
+          <div className='mt3'>
+            <Card
+              size='small'
+              title='微博发布频率'
+              className='shadow-2 h-100'
+            >
+              <SliderChart />
+            </Card>
+            {/* <h3 className='tc'>微博发布频率</h3> */ }
+          </div>
+          {
+            type !== '-1' &&
+              <div className='mt3'>
                 <Card
                   size='small'
                   title='粉丝认证类型分布'
@@ -81,8 +88,7 @@ export class weibo extends Component {
                   { verifyType.length > 0 && <Pie data={verifyType} /> }
                 </Card>
               </div>
-            }
-          </div>
+          }
           <div className='mt3'>
             <Card
               size='small'

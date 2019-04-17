@@ -57,29 +57,35 @@ export class weibo extends Component {
       <div className='pa2'>
         <h1 className='ml4 mt0'>{`${typeMapper[type]}: ${key}`}</h1>
         <Skeleton active loading={loading} title={false} paragraph={{ rows: 5 }}>
-          <div className='flex flex-auto'>
-            <Statistic title='评论数' value={commentNum} className='ph4 pv3 shadow-2' />
-            <Statistic title='总点赞数' value={likeCounts} className='ml5 ph4 pv3 shadow-2' />
+          <div className='flex flex-auto shadow-2'>
+            <div className='w-50 tc'>
+              <Statistic title='评论数' value={commentNum} className='ph4 pv3 center' valueStyle={{
+                color: '#1590FF'
+              }} />
+            </div>
+            <div className='w-50 tc'>
+              <Statistic title='总点赞数' value={likeCounts} className='ph4 pv3 center' valueStyle={{
+                color: '#1590FF'
+              }} />
+            </div>
           </div>
-          <div className='mt3 flex flex-auto justify-between'>
-            <div className='dib w-48'>
-              <Card
-                size='small'
-                title='评论时间分布'
-                className='shadow-2 h-100'
-              >
-                <SliderChart />
-              </Card>
-            </div>
-            <div className='dib w-48'>
-              <Card
-                size='small'
-                title='评论用户群体分布'
-                className='shadow-2 h-100'
-              >
-                { verifyType.length > 0 && <Pie data={verifyType} /> }
-              </Card>
-            </div>
+          <div className='mt3'>
+            <Card
+              size='small'
+              title='评论时间分布'
+              className='shadow-2 h-100'
+            >
+              <SliderChart />
+            </Card>
+          </div>
+          <div className='mt3'>
+            <Card
+              size='small'
+              title='评论用户群体分布'
+              className='shadow-2 h-100'
+            >
+              { verifyType.length > 0 && <Pie data={verifyType} /> }
+            </Card>
           </div>
           <div className='mt3'>
             <Card
