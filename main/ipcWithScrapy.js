@@ -22,7 +22,7 @@ const addListener = () => {
       })
       .join('@_@')
     // console.log(r)
-    let child = spawn('python3', ['entrypoint.py', 'weibo', r], {
+    let child = spawn('python', ['entrypoint.py', 'weibo', r], {
       cwd: join(__dirname, '../weibo_scrapy')
     })
     // child.on('error', console.error)
@@ -56,7 +56,7 @@ const addListener = () => {
       })
       .join('@_@')
     // console.log(r)
-    let child = spawn('python3', ['entrypoint.py', 'weibo', r], {
+    let child = spawn('python', ['entrypoint.py', 'weibo', r], {
       cwd: join(__dirname, '../weibo_scrapy')
     })
     // child.on('error', console.error)
@@ -90,7 +90,7 @@ const addListener = () => {
       })
       .join('@_@')
     // console.log(r)
-    let child = spawn('python3', ['entrypoint.py', 'repost', r], {
+    let child = spawn('python', ['entrypoint.py', 'repost', r], {
       cwd: join(__dirname, '../weibo_scrapy')
     })
     // child.on('error', console.error)
@@ -124,7 +124,7 @@ const addListener = () => {
       })
       .join('@_@')
     // console.log(r)
-    let child = spawn('python3', ['entrypoint.py', 'comment', r], {
+    let child = spawn('python', ['entrypoint.py', 'comment', r], {
       cwd: join(__dirname, '../weibo_scrapy')
     })
     // child.on('error', console.error)
@@ -158,7 +158,7 @@ const addListener = () => {
       })
       .join('@_@')
     // console.log(r)
-    let child = spawn('python3', ['wechat_public.py', r], {
+    let child = spawn('python', ['wechat_public.py', r], {
       cwd: join(__dirname, '../weibo_scrapy')
     })
     // child.on('error', console.error)
