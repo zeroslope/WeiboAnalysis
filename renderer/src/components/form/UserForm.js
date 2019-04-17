@@ -26,9 +26,9 @@ class UserForm extends Component {
         centered
       >
         <Form layout='vertical'>
-          <Form.Item label='用户名'>
+          <Form.Item label='项目名称'>
             {getFieldDecorator('username', {
-              rules: [{ required: true, message: '请输入微博用户名' }]
+              rules: [{ required: true, message: '请输入微博项目名称' }]
             })(
               <Input size='small' className='db mt1 w-10' name='username' />
             )}
