@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Chart, Geom, Coord, Shape } from 'bizcharts'
+import cloud from '../../../assets/image/cloud.jpg'
 import DataSet from '@antv/data-set'
 
 function getTextAttrs (cfg) {
@@ -42,35 +43,56 @@ const scale = {
 }
 
 class Wordcloud extends Component {
-  render () {
+  constructor () {
+    super()
+    this.state = {
+      dv: null
+    }
+  }
+  componentDidMount () {
     const dv = new DataSet.View().source(this.props.data)
     const range = dv.range('value')
     const min = range[0]
     const max = range[1]
-    dv.transform({
-      type: 'tag-cloud',
-      fields: ['x', 'value'],
-      size: [400, 400],
-      font: 'Verdana',
-      padding: 0,
-      timeInterval: 2000,
+    const imageMask = new window.Image()
+    imageMask.crossOrigin = ''
+    imageMask.src = cloud
 
-      rotate () {
-        let random = ~~(Math.random() * 4) % 4
-        if (random === 2) {
-          random = 0
-        }
-        return random * 90 // 0, 90, 270
-      },
+    imageMask.onload = () => {
+      dv.transform({
+        type: 'tag-cloud',
+        fields: ['x', 'value'],
+        imageMask,
+        size: [400, 400],
+        font: 'Verdana',
+        padding: 0,
+        timeInterval: 2000,
 
-      fontSize (d) {
-        if (d.value) {
-          const divisor = (max - min) !== 0 ? (max - min) : 1
-          return ((d.value - min) / divisor) * (64 - 24) + 24
+        rotate () {
+          let random = ~~(Math.random() * 4) % 4
+          if (random === 2) {
+            random = 0
+          }
+          return random * 90 // 0, 90, 270
+        },
+
+        fontSize (d) {
+          if (d.value) {
+            const divisor = (max - min) !== 0 ? (max - min) : 1
+            return ((d.value - min) / divisor) * (64 - 24) + 24
+          }
+          return 0
         }
-        return 0
-      }
-    })
+      })
+
+      this.setState({
+        dv
+      })
+    }
+  }
+  render () {
+    const { dv } = this.state
+    if (!dv) return null
 
     return (
       <div>
