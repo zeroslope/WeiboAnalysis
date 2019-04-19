@@ -79,7 +79,7 @@ class Wordcloud extends Component {
         fontSize (d) {
           if (d.value) {
             const divisor = (max - min) !== 0 ? (max - min) : 1
-            return ((d.value - min) / divisor) * (48 - 16) + 16
+            return ((d.value - min) / divisor) * (80 - 16) + 16
           }
           return 0
         }
