@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Chart, Geom, Coord, Shape } from 'bizcharts'
-import cloud from '../../../assets/image/cloud.jpg'
+import cloud from '../../../assets/image/circle.jpeg'
 import DataSet from '@antv/data-set'
 
 function getTextAttrs (cfg) {
@@ -63,10 +63,10 @@ class Wordcloud extends Component {
         type: 'tag-cloud',
         fields: ['x', 'value'],
         imageMask,
-        size: [400, 400],
+        size: [640, 320],
         font: 'Verdana',
         padding: 0,
-        timeInterval: 2000,
+        timeInterval: 5000,
 
         rotate () {
           let random = ~~(Math.random() * 4) % 4
@@ -79,7 +79,7 @@ class Wordcloud extends Component {
         fontSize (d) {
           if (d.value) {
             const divisor = (max - min) !== 0 ? (max - min) : 1
-            return ((d.value - min) / divisor) * (64 - 24) + 24
+            return ((d.value - min) / divisor) * (48 - 16) + 16
           }
           return 0
         }
@@ -90,15 +90,18 @@ class Wordcloud extends Component {
       })
     }
   }
+
   render () {
     const { dv } = this.state
     if (!dv) return null
 
     return (
-      <div>
+      <div className='center' style={{
+        width: '640px'
+      }}>
         <Chart
-          height={400}
-          width={400}
+          width={640}
+          height={320}
           data={dv}
           scale={scale}
           padding={0}
