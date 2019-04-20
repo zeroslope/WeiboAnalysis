@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Axis, Chart, Tooltip, Geom, Coord, Legend, Label } from 'bizcharts'
+import { Axis, Chart, Tooltip, Geom, Coord, Label } from 'bizcharts'
 import DataSet from '@antv/data-set'
 const { DataView } = DataSet
 
@@ -43,7 +43,17 @@ class Pie extends Component {
         <Geom
           type='intervalStack'
           position='percent'
-          color='item'
+          color={['item', (item) => {
+            console.log(item)
+            switch (item) {
+              case '普通用户':
+                return '#00FF7F'
+              case '橙V':
+                return '#FF8C00'
+              case '蓝V':
+                return '#1E90FF'
+            }
+          }]}
           tooltip={[
             'item*percent',
             (item, percent) => {
