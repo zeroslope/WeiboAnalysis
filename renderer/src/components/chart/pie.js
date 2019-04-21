@@ -52,6 +52,10 @@ class Pie extends Component {
                 return '#FF8C00'
               case '蓝V':
                 return '#1E90FF'
+              case '男':
+                return '#1E90FF'
+              case '女':
+                return '#FF6666'
             }
           }]}
           tooltip={[

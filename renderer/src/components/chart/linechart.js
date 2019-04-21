@@ -32,7 +32,7 @@ function getComponent (data) {
     time: {
       type: 'time',
       tickCount: 8,
-      mask: 'YYYY-MM-DD HH:mm'
+      mask: 'YYYY-MM-DD HH'
     },
     value: {
       min: 0
