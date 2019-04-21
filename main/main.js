@@ -63,8 +63,7 @@ const createWindow = () => {
   mainWindow.loadURL(url)
 
   // Open the DevTools.
-  // if (isDev) { mainWindow.webContents.openDevTools() }
-  mainWindow.webContents.openDevTools()
+  if (isDev) { mainWindow.webContents.openDevTools() }
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -85,6 +84,7 @@ app.on('window-all-closed', function () {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   ipcWithScrapy.deleteListener()
+  ipcMain.removeAllListeners('change-proxy')
   if (process.platform !== 'darwin') {
     app.quit()
   }

@@ -55,7 +55,7 @@ export class weibo extends Component {
     const SliderChart = getComponent(timeline)
     return (
       <div className='pa2'>
-        <h1 className='ml4 mt0'>{`${typeMapper[type]}: ${key}`}</h1>
+        <h1 className='mt0'>{`${typeMapper[type]}: ${key}`}</h1>
         <Skeleton active loading={loading} title={false} paragraph={{ rows: 5 }}>
           <div className='flex flex-auto shadow-2'>
             <div className='w-50 tc'>
