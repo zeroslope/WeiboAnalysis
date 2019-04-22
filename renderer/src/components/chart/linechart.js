@@ -67,9 +67,20 @@ function getComponent (data) {
             <Tooltip />
             <Geom
               type='line'
-              size={1}
+              size={2}
               position='time*value'
+			  shape={'smooth'}
             />
+			          <Geom
+            type="point"
+            position="time*value"
+            size={4}
+            shape={"circle"}
+            style={{
+              stroke: "#fff",
+              lineWidth: 1
+            }}
+          />
           </Chart>
           <div>
             <Slider

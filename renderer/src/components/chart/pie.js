@@ -47,7 +47,7 @@ class Pie extends Component {
             console.log(item)
             switch (item) {
               case '普通用户':
-                return '#00FF7F'
+                return '#A9A9A9'
               case '橙V':
                 return '#FF8C00'
               case '蓝V':
@@ -55,7 +55,7 @@ class Pie extends Component {
               case '男':
                 return '#1E90FF'
               case '女':
-                return '#FF6666'
+                return '#FF69B4'
             }
           }]}
           tooltip={[
