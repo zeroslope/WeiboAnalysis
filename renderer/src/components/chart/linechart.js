@@ -7,8 +7,8 @@ function getComponent (data) {
   if (data.length === 0) return null
 
   let newData = data.map(d => ({
-    item: new Date(d.item).getTime(),
-    time: d.item,
+    item: new Date(d.item+':00').getTime(),
+    time: d.item+':00',
     value: d.value
   })).sort((a, b) => a.item - b.item)
 
