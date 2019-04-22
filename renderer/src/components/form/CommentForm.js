@@ -40,7 +40,7 @@ class CommentForm extends Component {
               <Input size='small' className='db mt1 w-10' name='userId' />
             )}
           </Form.Item>
-          <Form.Item label='转发页码'>
+          <Form.Item label='评论页码'>
             {getFieldDecorator('pageNumber', {
               initialValue: 1
             })(
