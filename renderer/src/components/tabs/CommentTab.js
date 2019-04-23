@@ -41,7 +41,7 @@ class CommentTab extends Component {
     align: 'center',
     width: 300
   }, {
-    title: '转发页码',
+    title: '评论页码',
     dataIndex: 'pageNumber',
     align: 'center',
     width: 100
