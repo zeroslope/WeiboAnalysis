@@ -33,9 +33,9 @@ class CommentForm extends Component {
               <Input size='small' className='db mt1 w-10' name='projectName' />
             )}
           </Form.Item>
-          <Form.Item label='用户ID'>
+          <Form.Item label='微博ID'>
             {getFieldDecorator('weiboId', {
-              rules: [{ required: true, message: '请输入微博用户ID' }]
+              rules: [{ required: true, message: '请输入微博ID' }]
             })(
               <Input size='small' className='db mt1 w-10' name='userId' />
             )}
