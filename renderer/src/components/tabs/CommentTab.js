@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import RepostForm from '../form/RepostForm'
+import CommentForm from '../form/CommentForm'
 import { addComment, delComment, setScrapy, delAllComment } from '../../actions/scrapy'
 import { Button, Table, Popconfirm, message } from 'antd'
 
@@ -144,7 +144,7 @@ class CommentTab extends Component {
           loading={this.state.loading}
           scroll={{ y: window.innerHeight - 140 - 128 - 96 }}
         />
-        <RepostForm
+        <CommentForm
           wrappedComponentRef={this.saveFormRef}
           visible={this.state.visible}
           onCancel={this.handleCancel}
