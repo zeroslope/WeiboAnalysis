@@ -12,7 +12,7 @@ const ipcWithScrapy = require('./ipcWithScrapy')
 ipcMain.on('change-proxy', (event, arg) => {
   const { certificate, password } = arg
   try {
-    spawnSync('python', ['modify_setting.py', certificate, password], {
+    spawnSync('python', ['modify_setting.py', 'proxy', certificate, password], {
       cwd: join(__dirname, '../weibo_scrapy')
     })
   } catch (err) {
