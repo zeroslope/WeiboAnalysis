@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import Home from './pages/home'
+import Hello from './pages/hello'
 import Wechat from './pages/wechat'
 import Record from './pages/record'
 import Setting from './pages/setting'
@@ -12,7 +13,8 @@ import Repost from './pages/repost'
 export default () => {
   return (
     <Switch>
-      <Route exact path='/' component={Home} />
+      <Route exact path='/' component={Hello} />
+      <Route exact path='/home' component={Home} />
       <Route exact path='/wechat' component={Wechat} />
       <Route exact path='/record' component={Record} />
       <Route exact path='/setting' component={Setting} />

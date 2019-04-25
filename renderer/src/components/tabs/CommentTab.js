@@ -89,7 +89,7 @@ class CommentTab extends Component {
         } else {
           this.props.setScrapy(-1)
           this.setState({ loading: false })
-          message.info('评论数据爬取完成')
+          message.info('评论数据获取完成')
           this.ipcRenderer.removeAllListeners('search-by-comment')
         }
       })

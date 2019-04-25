@@ -35,8 +35,8 @@ class LayoutComponent extends Component {
           disabled={isScrapying > 0}
         >
           <Menu theme='dark' defaultSelectedKeys={[match.path]} mode='inline'>
-            <Menu.Item key='/' disabled={isScrapying}>
-              <Link to='/'>
+            <Menu.Item key='/home' disabled={isScrapying}>
+              <Link to='/home'>
                 <div>
                   <Icon type='weibo' />
                   <span>微博</span>

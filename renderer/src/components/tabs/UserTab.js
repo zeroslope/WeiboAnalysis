@@ -41,7 +41,7 @@ class UserTab extends Component {
     align: 'center',
     width: 300
   }, {
-    title: '爬取页码',
+    title: '页码',
     dataIndex: 'pageNumber',
     align: 'center',
     width: 100
@@ -95,7 +95,7 @@ class UserTab extends Component {
         } else {
           this.props.setScrapy(-1)
           this.setState({ loading: false })
-          message.info('基于用户ID数据爬取完成')
+          message.info('用户ID数据获取完成')
           this.ipcRenderer.removeAllListeners('search-by-user')
         }
       })

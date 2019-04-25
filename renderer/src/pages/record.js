@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import Layout from '../components/Layout'
 import { Table, message } from 'antd'
-const BrowserWindow = window.electron.remote.BrowserWindow
 const dialog = window.electron.remote.dialog
 
-const join = window.require('path').join
-
-const typeFilter = ['用户抓取', '综合抓取', '热门抓取', '实时抓取', '微博转发', '微博评论', '微信']
+const typeFilter = ['微博用户', '微博综合', '微博热门', '微博实时', '微博转发', '微博评论', '微信']
   .map(s => ({
     value: s,
     text: s
@@ -15,6 +12,7 @@ const typeFilter = ['用户抓取', '综合抓取', '热门抓取', '实时抓�
 class Record extends Component {
   getHistory = window.electron.remote.require('./getHistory').getHistory || false
   delHistory = window.electron.remote.require('./getHistory').delHistory || false
+  openWindow = window.electron.remote.require('./getAnalyize').openWindow || false
   exportExcel = window.electron.remote.require('./exportExcel') || false
 
   state = {
@@ -79,28 +77,7 @@ class Record extends Component {
           break
       }
       const onClick = () => {
-        let win = new BrowserWindow({
-          width: 1000,
-          height: 800,
-          webPreferences: {
-            preload: join(__dirname, '../../../main/preload.js')
-          }
-        })
-        win.on('close', () => { win = null })
-        // console.log(window.isDev)
-        if (window.isDev) {
-          win.loadURL('http://localhost:1234#' + pathname)
-        } else {
-          // let url = window.require('url').format({
-          //   protocol: 'file',
-          //   pathname: window.require('path').join(__dirname, `../../../app/index.html`)
-          // })
-          // console.log(url)
-          win.loadFile('app/index.html', {
-            hash: pathname
-          })
-        }
-        win.show()
+        this.openWindow(pathname)
       }
       return (
         <a onClick={onClick}>分析</a>

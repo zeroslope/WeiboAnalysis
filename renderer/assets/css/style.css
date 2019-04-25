@@ -26,3 +26,23 @@ body {
 .w-48 {
   width: 48%;
 }
+
+.hover-underline {
+  position: relative;
+}
+
+.hover-underline:after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  width: 0%;
+  height: 0.1em;
+  background: currentColor;
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.hover-underline:hover:after {
+  width: 100%;
+}

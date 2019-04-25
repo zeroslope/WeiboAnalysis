@@ -89,7 +89,7 @@ class KeywordTab extends Component {
         } else {
           this.props.setScrapy(-1)
           this.setState({ loading: false })
-          message.info('微博转发数据爬取完成')
+          message.info('微博转发数据获取完成')
           this.ipcRenderer.removeAllListeners('search-by-repost')
         }
       })

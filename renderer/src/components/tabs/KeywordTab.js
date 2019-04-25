@@ -51,7 +51,7 @@ class KeywordTab extends Component {
       }
     }
   }, {
-    title: '爬取页码',
+    title: '页码',
     dataIndex: 'pageNumber',
     align: 'center',
     width: 100
@@ -104,7 +104,7 @@ class KeywordTab extends Component {
         } else {
           this.props.setScrapy(-1)
           this.setState({ loading: false })
-          message.info('基于关键字数据爬取完成')
+          message.info('关键字数据获取完成')
           this.ipcRenderer.removeAllListeners('search-by-keyword')
         }
       })

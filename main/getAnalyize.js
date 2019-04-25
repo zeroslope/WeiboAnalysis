@@ -1,8 +1,10 @@
 const { spawnSync } = require('child_process')
 const { join } = require('path')
+const { BrowserWindow } = require('electron')
+const isDev = require('electron-is-dev')
 
 const getWeibo = (type, key) => {
-  // const cmd = `cd ../weibo_scrapy && python analysis.py ${type} ${key}`
+  // const cmd = `cd ../weibo_scrapy && python3 analysis.py ${type} ${key}`
   try {
     return new Promise((resolve, reject) => {
       try {
@@ -16,15 +18,6 @@ const getWeibo = (type, key) => {
       } catch (err) {
         reject(err)
       }
-      // exec(cmd, (err, stdout, stderr) => {
-      //   if (err) {
-      //     reject(err)
-      //   }
-      //   if (stderr) {
-      //     reject(stderr)
-      //   }
-      //   resolve(stdout)
-      // })
     })
       .then(stdout => JSON.parse(stdout.toString()))
       .catch(stderr => {
@@ -36,6 +29,27 @@ const getWeibo = (type, key) => {
   }
 }
 
+const openWindow = (pathname) => {
+  let win = new BrowserWindow({
+    width: 1000,
+    height: 800,
+    webPreferences: {
+      preload: join(__dirname, 'preload.js')
+    }
+  })
+  win.on('close', () => { win = null })
+  // console.log(window.isDev)
+  if (isDev) {
+    win.loadURL('http://localhost:1234#' + pathname)
+  } else {
+    win.loadFile('app/index.html', {
+      hash: pathname
+    })
+  }
+  win.show()
+}
+
 module.exports = {
-  getWeibo
+  getWeibo,
+  openWindow
 }

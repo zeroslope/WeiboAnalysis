@@ -40,14 +40,14 @@ class UserForm extends Component {
               <Input size='small' className='db mt1 w-10' name='userId' />
             )}
           </Form.Item>
-          <Form.Item label='爬取页码'>
+          <Form.Item label='页码'>
             {getFieldDecorator('pageNumber', {
               initialValue: 1
             })(
               <InputNumber size='small' className='db mt1' min={1} />
             )}
           </Form.Item>
-          <Form.Item label='是否爬取图片'>
+          <Form.Item label='是否需要图片'>
             {getFieldDecorator('isNeedImage', {
               initialValue: false
             })(
