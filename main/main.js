@@ -20,6 +20,17 @@ ipcMain.on('change-proxy', (event, arg) => {
   }
 })
 
+ipcMain.on('change-pic', (event, arg) => {
+  const { imgPath } = arg
+  try {
+    spawnSync('python', ['modify_setting.py', 'pic_dir', imgPath], {
+      cwd: join(__dirname, '../weibo_scrapy')
+    })
+  } catch (err) {
+    throw err
+  }
+})
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -85,6 +96,7 @@ app.on('window-all-closed', function () {
   // to stay active until the user quits explicitly with Cmd + Q
   ipcWithScrapy.deleteListener()
   ipcMain.removeAllListeners('change-proxy')
+  ipcMain.removeAllListeners('change-pic')
   if (process.platform !== 'darwin') {
     app.quit()
   }
