@@ -3,10 +3,11 @@
 import { Component } from 'react'
 import { jsx, css } from '@emotion/core' // eslint-disable-line
 import { Link } from 'react-router-dom'
-// import Jelly1 from '../../assets/image/jelly1.png'
-// import Jelly2 from '../../assets/image/jelly2.png'
-// import iconPng from '../../assets/image/icon.png'
-import logo from '../../assets/image/logo.jpg'
+import Jelly1 from '../../assets/image/jelly1.png'
+import Jelly2 from '../../assets/image/jelly2.png'
+import icon from '../../assets/image/wwww.png'
+import Version from '../../assets/image/version.png'
+import good from '../../assets/image/good.png'
 import { Icon } from 'antd'
 
 class Index extends Component {
@@ -15,7 +16,7 @@ class Index extends Component {
       <div className='absolute absolute--fill' css={css`
         font-family: 'FZDHTJW';
       `}>
-        {/* <img src={Jelly1} css={css`
+        <img src={Jelly1} css={css`
           display: block;
           position: absolute;
           top: 0;
@@ -30,58 +31,64 @@ class Index extends Component {
           right: 0;
           width: 30%;
           z-index: -1;
-      `} /> */ }
-
-        {/* <div css={css`
+        `} />
+        <img src={good} css={css`
+          display: block;
           position: absolute;
-          top: 0.75rem;
-          left: 0.5rem;
-        `}>
-          <span css={css`
-            padding-left: 0.75rem;
-            font-size: 2rem;
-            font-weight: 600;
-            color: rgba(0, 0, 0, 0.85);
-            text-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-          `}>Dear, welcome back!</span>
-        </div> */ }
-
-        <div className='flex flex-auto justify-between align-center' css={css`
+          bottom: 8%;
+          right: 8%;
+          z-index: 0;
+          width: 200px;
+        `} />
+        <img src={Version} css={css`
+          display: block;
           position: absolute;
-          top: 0.75rem;
-          right: 6rem;
-          width: 256px;
-        `}>
-          <Icon type='weibo' className='f3' />
-          <Icon type='wechat' className='f3' />
-          <Icon type='line-chart' className='f3' />
-        </div>
+          top: 1rem;
+          right: 2rem;
+          height: 2rem;
+          z-index: 0;
+        `} />
+        <img src={icon} css={css`
+          display: block;
+          position: absolute;
+          left: 1rem;
+          bottom: 3rem;
+          z-index: 0;
+        `} />
 
         <div css={css`
           position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        `}>
-          <img src={logo} css={css`
-            width: 288px;
-          `} />
-        </div>
-
-        <div css={css`
-          position: absolute;
-          top: 50%;
+          top: 40%;
           right: 10%;
           transform: translate(0, -50%);
         `}>
+          <h1 css={css`
+            font-size: 45px;
+            color: rgb(0, 25, 70);
+            margin-top: 0px;
+            margin-bottom: 0px;
+          `}>
+            群力数据系统
+          </h1>
+
           <Link to='/home'>
-            <div className='hover-underline f3 fw6' css={css`
+            <div className='hover-underline f4 fw6' css={css`
               max-width: max-content;
               margin-left: auto;
+              color: #0033ff;
             `}>
               即刻开始 <Icon type='arrow-right' />
             </div>
           </Link>
+        </div>
+
+        <div css={css`
+          position: absolute;
+          bottom: 1rem;
+          left: 50%;
+          transform: translateX(-50%);
+        `}>
+          群力传媒内部单机版
         </div>
 
       </div>
