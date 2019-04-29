@@ -46,8 +46,3 @@ body {
 .hover-underline:hover:after {
   width: 100%;
 }
-
-@font-face {
-  font-family: FZDHTJW;
-  src: url('FZDHTJW.TTF');
-}

@@ -9,13 +9,12 @@ import icon from '../../assets/image/wwww.png'
 import Version from '../../assets/image/version.png'
 import good from '../../assets/image/good.png'
 import { Icon } from 'antd'
+import Name from '../../assets/image/name.png'
 
 class Index extends Component {
   render () {
     return (
-      <div className='absolute absolute--fill' css={css`
-        font-family: 'FZDHTJW';
-      `}>
+      <div className='absolute absolute--fill'>
         <img src={Jelly1} css={css`
           display: block;
           position: absolute;
@@ -62,14 +61,10 @@ class Index extends Component {
           right: 10%;
           transform: translate(0, -50%);
         `}>
-          <h1 css={css`
-            font-size: 45px;
-            color: rgb(0, 25, 70);
-            margin-top: 0px;
-            margin-bottom: 0px;
-          `}>
-            群力数据系统
-          </h1>
+          <img src={ Name } css={css`
+            width: 280px;
+            margin-bottom: 16px;
+          `} />
 
           <Link to='/home'>
             <div className='hover-underline f4 fw6' css={css`
@@ -77,7 +72,7 @@ class Index extends Component {
               margin-left: auto;
               color: #0033ff;
             `}>
-              即刻开始 <Icon type='arrow-right' />
+              <i>即刻开始</i> <Icon type='arrow-right' />
             </div>
           </Link>
         </div>
