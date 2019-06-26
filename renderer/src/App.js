@@ -13,8 +13,7 @@ import Repost from './pages/repost'
 export default () => {
   return (
     <Switch>
-      <Route exact path='/' component={Hello} />
-      <Route exact path='/home' component={Home} />
+      <Route exact path='/' component={Home} />
       <Route exact path='/wechat' component={Wechat} />
       <Route exact path='/record' component={Record} />
       <Route exact path='/setting' component={Setting} />
