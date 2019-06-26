@@ -2,7 +2,6 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import Home from './pages/home'
-import Hello from './pages/hello'
 import Wechat from './pages/wechat'
 import Record from './pages/record'
 import Setting from './pages/setting'
