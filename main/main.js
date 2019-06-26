@@ -12,7 +12,7 @@ const ipcWithScrapy = require('./ipcWithScrapy')
 ipcMain.on('change-proxy', (event, arg) => {
   const { certificate, password } = arg
   try {
-    spawnSync('python', ['modify_setting.py', 'proxy', certificate, password], {
+    spawnSync('python3', ['modify_setting.py', 'proxy', certificate, password], {
       cwd: join(__dirname, '../weibo_scrapy')
     })
   } catch (err) {
@@ -23,7 +23,7 @@ ipcMain.on('change-proxy', (event, arg) => {
 ipcMain.on('change-pic', (event, arg) => {
   const { imgPath } = arg
   try {
-    spawnSync('python', ['modify_setting.py', 'pic_dir', imgPath], {
+    spawnSync('python3', ['modify_setting.py', 'pic_dir', imgPath], {
       cwd: join(__dirname, '../weibo_scrapy')
     })
   } catch (err) {

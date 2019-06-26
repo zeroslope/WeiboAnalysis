@@ -8,7 +8,7 @@ const getWeibo = (type, key) => {
   try {
     return new Promise((resolve, reject) => {
       try {
-        const res = spawnSync('python', ['analysis.py', type, key], {
+        const res = spawnSync('python3', ['analysis.py', type, key], {
           cwd: join(__dirname, '../weibo_scrapy')
         })
         if (res.error) {

@@ -17,7 +17,7 @@
   },
   "build": {
     "appId": "io.zeroslope.weibo",
-    "productName": "群力数据系统",
+    "productName": "爬虫系统",
     "copyright": "Copyright © 2019 zeroslope",
     "directories": {
       "output": "dist",

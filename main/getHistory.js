@@ -13,7 +13,7 @@ const typeMapper = {
 
 const getHistory = () => {
   try {
-    let spawnRes = spawnSync('python', ['history_record.py', 'get'], {
+    let spawnRes = spawnSync('python3', ['history_record.py', 'get'], {
       cwd: join(__dirname, '../weibo_scrapy')
     })
     const stdout = spawnRes.stdout

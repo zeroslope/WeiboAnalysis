@@ -5,7 +5,7 @@ const { join } = require('path')
 const exportExcel = (type, key, filepath) => {
   // const cmd = `cd ../weibo_scrapy && python sql_to_excel.py ${type} ${key} ${filepath}`
   try {
-    spawnSync('python', ['sql_to_excel.py', type, key, filepath], {
+    spawnSync('python3', ['sql_to_excel.py', type, key, filepath], {
       cwd: join(__dirname, '../weibo_scrapy')
     })
     // execSync(cmd)
